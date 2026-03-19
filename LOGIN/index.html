@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDV Clean - Refrigeração Mariano</title>
+    <link rel="stylesheet" href="/auth-assets/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="window-header">
+            <div class="dots">
+                <span class="dot close"></span>
+                <span class="dot minimize"></span>
+                <span class="dot expand"></span>
+            </div>
+            <span class="title">Sistema PDV • Abertura de Caixa</span>
+        </header>
+
+        <main class="main-content">
+            <div class="grid-layout">
+                <section class="form-card">
+                    <div class="input-group">
+                        <label>Cód. Operador</label>
+                        <div class="input-wrapper"> <i data-lucide="user"></i>
+                            <input type="text" id="operador" placeholder="Digite seu código" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Senha</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="lock"></i>
+                            <input type="password" id="senha" placeholder="••••••"
+                                style="flex: 1; border: none; outline: none; background: transparent;">
+                            <span id="toggle-senha"
+                                style="cursor: pointer; font-size: 20px; user-select: none; padding: 5px;">👁️</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Fundo de Caixa</label>
+                        <div class="input-wrapper"> <i data-lucide="calculator"
+                                style="margin-right: 5px; width: 18px;"></i>
+                            <span style="font-weight: 600; color: var(--text-muted); margin-right: 5px;">R$</span>
+                            <input type="number" id="fundo-caixa" placeholder="0,00">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="side-panel">
+                    <div class="icon-box">
+                        <i data-lucide="banknote" class="primary-icon"></i>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Operação</span>
+                            <span class="stat-value">#0001</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Data</span>
+                            <span class="stat-value" id="data-atual">--/--/----</span>
+                        </div>
+                        <div class="stat-item highlight">
+                            <span class="stat-label">Hora Atual</span>
+                            <span class="stat-value" id="hora-atual">00:00:00</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="mensagem-boas-vindas"
+                style="text-align: center; margin-bottom: 15px; min-height: 20px; font-weight: 600; color: var(--primary);">
+            </div>
+
+            <footer class="action-footer">
+                <button id="btn-retornar" class="btn-secondary">
+                    <i data-lucide="log-out"></i> ESC Sair
+                </button>
+                <button id="btn-iniciar" class="btn-primary">
+                    F1 Iniciar Caixa <i data-lucide="chevron-right"></i>
+                </button>
+            </footer>
+        </main>
+
+        <footer class="system-bar">
+            <div class="brand-logo">
+                <img src="../IMAGENS/Gemini_Generated_Image_fuk1fjfuk1fjfuk1.png" alt="Refrigeração Mariano">
+            </div>
+            <div id="timestamp-footer" class="live-info">---</div>
+        </footer>
+    </div>
+
+    <script src="/auth-assets/script.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

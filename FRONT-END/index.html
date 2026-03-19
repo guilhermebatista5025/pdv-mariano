@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema PDV - Configure Software Clone</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="main-window">
+        <header class="top-bar">
+            <div class="info-left">
+                <small>Data Compilação: 11 Setembro 2025</small><br>
+                <small>Revisão: 23227</small>
+            </div>
+            <div class="letreiro-container">
+                <h1 id="titulo-operacao">CAIXA LIVRE</h1>
+            </div>
+
+            <div class="window-controls">
+                <button onclick="alternarTelaCheia()"
+                    style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+
+
+            </div>
+        </header>
+
+        <div class="shortcuts-bar">
+            <span>Preço Selecionado [F9]</span>
+            <span>Preço de Venda</span>
+            <span>Finalizar Venda [F10]</span>
+        </div>
+
+        <div class="content-area">
+
+            <aside class="left-panel">
+                <div class="input-group">
+                    <label>
+                        Produto [F3]
+                        <span class="wrapper-ajuda">
+                            <i class="fas fa-question-circle icone-f3"></i>
+
+                            <div class="pop-up-central">
+                                <div class="ajuda-head">AJUDA DO SISTEMA</div>
+                                <div class="ajuda-body">
+                                    <p><b>• FINALISAR VENDAS:</b> Pressione a tecla <b>F10</b> para abrir o painel de
+                                        venda.</p>
+                                    <p><b>• MENU PRINCIPAL:</b> Para acessar o menu principal, use: <b>F9</b>.</p>
+                                    <p><b>• RELATÓRIOS:</b> Pressione F4 para abrir o menu de <b>RELATÓRIOS</b>.</p>
+                                    <p><b>• EXCLUSÃO:</b> Pressione a tecla F2, coloque o N° da sequencia e aperte
+                                        <b>REMOVER</b>.
+                                    </p>
+                                    <hr>
+                                    <p style="text-align:center; font-size: 10px; color: #666;">Retire o mouse do ícone
+                                        para fechar</p>
+                                </div>
+                            </div>
+                        </span>
+                    </label>
+
+
+                    <!-- PARTE DO INPUT COM ICONE / MODAL MAN  -->
+
+                    <!-- INPUT -->
+                    <div class="input-wrapper">
+                        <input type="text" id="input-produto" placeholder="Digite o produto">
+                        <i class="fa fa-search" id="btn-consulta"></i>
+                    </div>
+
+                    <!-- MODAL -->
+                    <div class="pdv-overlay" id="pdv-modal">
+                        <div class="pdv-modal">
+
+                            <!-- TOPO -->
+                            <div class="pdv-top">
+                                <span>Consulta de Produtos</span>
+                                <button id="pdv-fechar">✕</button>
+                            </div>
+
+                            <!-- FILTROS -->
+                            <div class="pdv-filtros">
+                                <label><input type="radio" checked> Começa com</label>
+                                <label><input type="radio"> Contém</label>
+
+                                <input type="text" placeholder="Pesquisar produto...">
+
+                                <label class="chk"><input type="checkbox"> Produtos com preços</label>
+                            </div>
+
+                            <!-- TABELA -->
+                            <div class="pdv-tabela">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Descrição</th>
+                                            <th>UN</th>
+                                            <th>Sit. Trib.</th>
+                                            <th>Preço</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>268</td>
+                                            <td>MACAQUINHO BASIQUINHO ESTAMPADO</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>139,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1527</td>
+                                            <td>MACAQUINHO CREPE ESTAMPADO COM BOTÕES</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>259,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>726</td>
+                                            <td>MACAQUINHO CURTO COM BOTÕES E CINTO GOLA POLO</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>169,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1804</td>
+                                            <td>MACAQUINHO CURTO DE ALCINHA BOLSO LATERAL</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>149,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1050</td>
+                                            <td>MACAQUINHO CURTO PLUS SIZE ESTAMPADO LASTEX</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>149,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1526</td>
+                                            <td>MACAQUINHO EST DECOTE TRANSPASSADO COM MANGAS</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>249,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>117</td>
+                                            <td>MACAQUINHO INSPIRACAO FARM</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>249,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1532</td>
+                                            <td>MACAQUINHO LINHO DETALHE OFF</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>298,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1530</td>
+                                            <td>MACAQUINHO LISO ALCAS LARGAS</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>239,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>4172</td>
+                                            <td>MACAQUINHO MANGA E ALCA CIGANINHA</td>
+                                            <td>UN</td>
+                                            <td>ISENTO</td>
+                                            <td>145,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>4102</td>
+                                            <td>MACAQUINHO MANGA ESTAMPA GOLA COM AMARRAÇÃO</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>89,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>4073</td>
+                                            <td>MACAQUINHO REGATA ROSA</td>
+                                            <td>UN</td>
+                                            <td>ISENTO</td>
+                                            <td>140,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>1531</td>
+                                            <td>MACAQUINHO SAIA ASSIMÉTRICA COM BOTÕES</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>239,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>4239</td>
+                                            <td>MACAQUINHO VISCOSE COM CORDINHA NA CINTURA</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>130,90</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>14</td>
+                                            <td>MACAQUINHOS ESTAMPADO</td>
+                                            <td>UN</td>
+                                            <td>INCIDE</td>
+                                            <td>149,90</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                            <!-- RODAPÉ -->
+                            <div class="pdv-footer">
+                                <span>Em estoque: 1,0000</span>
+                                <button>Retornar [F1]</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row-split">
+                    <div class="input-group">
+                        <label>METROS</label>
+                        <input type="number" id="input-metros" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>VALOR DO METRO</label>
+                        <input type="text" id="input-valor-metro" disabled placeholder="R$ 0,00">
+                    </div>
+                </div>
+
+
+                <div class="values-section">
+                    <div class="row-values">
+                        <div class="col">
+                            <label>Qtde</label>
+                            <input type="text" value="1,00" id="input-qtd">
+                        </div>
+                        <div class="col">
+                            <label>Preço Unitário</label>
+                            <input type="text" value="0,00" id="input-preco">
+                        </div>
+                    </div>
+
+                    <div class="discount-group">
+                        <label>Desconto [F12]</label>
+                        <div class="row-values-2">
+                            <input type="text" id="input-desc-porcentagem" placeholder="0,00%">
+                            <input type="text" id="input-desc-valor" placeholder="R$ 0,00">
+                        </div>
+                    </div>
+
+                    <div class="subtotal-group">
+                        <label>Sub-Total</label>
+                        <div class="display-value" id="display-subtotal">R$ 0,00</div>
+                    </div>
+
+
+                </div>
+
+
+            </aside>
+
+            <main class="right-panel">
+                <div class="grid-header">
+                    <span>Se</span>
+                    <span>Código</span>
+                    <span>Produto</span>
+                    <span>Un</span>
+                    <span>Grade</span>
+                    <span>Cor</span>
+                    <span>Preço</span>
+                    <span>Qtde</span>
+                    <span>Desc. ($)</span>
+                    <span>Total</span>
+                </div>
+                <div class="grid-body" id="lista-produtos">
+                </div>
+            </main>
+        </div>
+
+
+        <!------------------ FOooooooooooooooTEeeeeeeeeeeeeeeeeeRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
+
+        <footer class="bottom-bar">
+
+            <div class="footer-main">
+
+                <div class="footer-left-group">
+                    <div class="footer-logo">
+                        <img src="../IMAGENS/ChatGPT Image 11 de fev. de 2026, 11_13_22.png" alt="">
+                    </div>
+
+                    <div class="total-box">
+                        <span>Total de Itens:</span>
+                        <strong id="total-itens">0</strong>
+                    </div>
+                </div>
+
+                <div class="total-box big">
+                    <span>Total da Operação:</span>
+                    <strong id="total-operacao">R$ 0,00</strong>
+                </div>
+
+            </div>
+
+
+            <!-- Parte inferior -->
+            <div class="status-bar">
+                <span>SÉRIE: <strong class="resultado">1</strong></span>
+                <span>CHAVE: <strong class="resultado">2730</strong></span>
+                <span id="relogio">--/--/---- --:--:--</span>
+                <span>OPERADOR: <strong class="resultado">GUILHERME</strong></span>
+                <span>OPERAÇÃO: <strong class="resultado">0020</strong></span>
+            </div>
+
+        </footer>
+
+        <!-- SO NA APAGA ESSA DIV AKAKKAKAKAKAK, PQ? TAMBEM NS SO DEIXA -->
+    </div>
+
+    <!------------------------------------- PARTE DO F10 MAN TODA  A PARTE DE PAGAMAENTO TA AQUI -------------------------------------------->
+
+
+    <!-- MODAL (fora do footer, antes do script) -->
+    <div id="modal-pagamento" class="modal-overlay">
+
+        <div class="modal-content modal-pdv">
+
+            <header class="modal-header">
+                <h2>FINALIZAR VENDA [F10]</h2> <br>
+
+            </header>
+
+
+            <!-- TOPO RESUMO -->
+            <div class="top-resumo">
+
+                <div class="campo">
+                    <label>Sub-Total</label>
+                    <input type="text" id="sub-total" value="R$ 0,00">
+                </div>
+
+                <div class="campo">
+                    <label>Encargos</label>
+                    <input type="text" id="encargos" value="R$ 0,00">
+                </div>
+
+                <div class="campo">
+                    <label>Descontos (%)</label>
+                    <input type="number" id="desconto" value="R$ 0,00">
+                </div>
+
+                <div class="campo destaque-total">
+                    <label>Valor Total</label>
+                    <input type="text" id="modal-total-pagar" value="R$ 0,00">
+                </div>
+
+            </div>
+
+            <!-- INFO VENDEDOR / CLIENTE -->
+            <div class="info-bloco">
+
+                <div class="campo pequeno">
+                    <label>Vendedor</label>
+                    <input type="text" value="GLAUCIA">
+                </div>
+
+                <div class="campo grande">
+                    <label>Cliente</label>
+                    <input type="text" value="VENDA AO CONSUMIDOR">
+                </div>
+
+            </div>
+
+            <!-- CORPO PAGAMENTOS -->
+            <div class="pagamentos-area">
+
+                <!-- ESQUERDA -->
+                <div class="formas-pagamento">
+
+                    <h3>Formas de Pagamentos</h3> <br>
+
+                    <div class="linha-pg">
+                        <label>Dinheiro (F6)</label>
+                        <input type="text" id="pay-dinheiro" placeholder="R$ 0,00">
+                    </div>
+
+                    <div class="linha-pg">
+                        <label>Cartão (F7)</label>
+                        <input type="text" id="pay-cartao" placeholder="R$ 0,00">
+                    </div>
+
+                    <div class="linha-pg">
+                        <label>A Prazo (F9)</label>
+                        <input type="text" id="pay-prazo" placeholder="R$ 0,00">
+                    </div>
+
+                    <div class="soma">
+                        <span>Soma</span>
+                        <strong id="soma-pagamentos">R$ 0,00</strong>
+                    </div>
+
+                </div>
+
+                <!-- DIREITA -->
+                <div class="desdobramento">
+                    <h3>Desdobramento</h3> <br>
+
+                    <div class="resumo-linha">
+                        <span>Dinheiro</span>
+                        <span id="resumo-dinheiro">0,00</span>
+                    </div>
+
+                    <div class="resumo-linha">
+                        <span>Cartão</span>
+                        <span id="resumo-cartao">0,00</span>
+                    </div>
+
+                    <div class="resumo-linha">
+                        <span>Prazo</span>
+                        <span id="resumo-prazo">0,00</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TROCO -->
+            <div class="troco-box">
+                <span>TROCO</span>
+                <h2 id="modal-troco">R$ 0,00</h2>
+            </div>
+
+            <!-- OBS -->
+            <div class="campo">
+                <label>Observação</label>
+                <input type="text" id="observacao">
+            </div>
+
+            <!-- RODAPÉ -->
+            <div class="modal-footer">
+                <button id="btn-finalizar-venda" onclick="confirmarVenda()" class="btn-confirmar">
+                    Confirmar [F11]
+                </button>
+
+                <button onclick="fecharModal()" class="btn-cancelar">
+                    Cancelar [ESC]
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!---------------------- PARTE DO F2 PARA APAGAR ITEM/PRODUTO MAN  -------------------------------------------------->
+
+
+    <div id="modal-remover" class="modal-remover-overlay" style="display: none;">
+        <div class="modal-remover-box">
+            <h2>Remover Item</h2>
+            <p>Digite o número da sequência (SE)</p>
+            <input type="number" id="input-remover-seq">
+            <div class="modal-remover-botoes">
+                <button class="btn-confirmar" onclick="confirmarRemocao()">Remover</button>
+                <button class="btn-cancelar" onclick="fecharModalRemover()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------------- PARTE DA FINALIZAÇÃO DA VENDA -------------------------------------------------------->
+
+
+
+    <div id="modalRelatorioF4" class="f4-overlay">
+        <div class="f4-content">
+            <div class="f4-header">Parceiro - PDV - Fechamento da Venda</div>
+
+            <div class="f4-body">
+                <div class="f4-col-left">
+                    <div class="f4-info-grid">
+                        <div class="f4-info-item"><span>Operação</span><strong id="f4-op">2090</strong></div>
+                        <div class="f4-info-item"><span>Operador</span><strong id="f4-user">GLAUCIA</strong></div>
+                        <div class="f4-info-item"><span>Data</span><strong id="f4-data">13/02/2026</strong></div>
+                        <div class="f4-info-item"><span>Hora</span><strong id="f4-hora">09:50:00</strong></div>
+                    </div>
+
+                    <div class="f4-table-area">
+                        <p>Valores Por Condição</p>
+                        <table class="f4-table">
+                            <thead>
+                                <tr>
+                                    <th>Condição</th>
+                                    <th style="text-align:right">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DINHEIRO</td>
+                                    <td id="f4-val-dinheiro" class="f4-txt-right">0,00</td>
+                                </tr>
+                                <tr class="f4-row-highlight">
+                                    <td>CARTÃO</td>
+                                    <td id="f4-val-cartao" class="f4-txt-right">329,80</td>
+                                </tr>
+                                <tr>
+                                    <td>CHEQUE</td>
+                                    <td id="f4-val-cheque" class="f4-txt-right">0,00</td>
+                                </tr>
+                                <tr>
+                                    <td>PRAZO</td>
+                                    <td id="f4-val-prazo" class="f4-txt-right">0,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+                <!---------------------------- PARTE DO RELATORIO DAS VENDAS DO DIA ------------------------------->
+
+
+                <div id="caixa-modal"
+                    style="display: none; position: fixed; inset: 0; z-index: 999999; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); font-family: Arial, sans-serif;">
+
+                    <div
+                        style="background: white; width: 400px; border-radius: 10px; overflow: hidden; position: relative;">
+
+                        <div style="padding: 20px; background: #f8f9fa; border-bottom: 1px solid #ddd;">
+                            <h2 style="margin: 0; font-size: 18px;">📊 Resumo de Caixa</h2>
+                        </div>
+
+                        <div style="padding: 20px; line-height: 2;">
+                            <div style="display: flex; justify-content: space-between;"><span>Vendas:</span> <strong>R$
+                                    329,80</strong></div>
+                            <div style="display: flex; justify-content: space-between; color: red;">
+                                <span>Descontos:</span> <strong>R$ 0,00</strong>
+                            </div>
+                            <hr>
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 20px; font-weight: bold; color: #1e88e5;">
+                                <span>TOTAL:</span> <span>R$ 329,80</span>
+                            </div>
+                        </div>
+
+                        <div style="padding: 15px; background: #eee; text-align: right;">
+                            <button onclick="document.getElementById('caixa-modal').style.display='none'"
+                                style="padding: 10px 20px; cursor: pointer;">Fechar (ESC)</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--------------------------------- PARTE DO MODAL FALHA DE PESQUISA DE PRODUTO ------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                <script src="/script.js"></script>
+                <script src="parte-do-F4.js"></script>
+                <script src="parte-do-F9.js"></script>
+                <script src="parte-erro-produto.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios - Estilo Apple</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="mac-modal">
+        <!-- HEADER -->
+        <div class="mac-header">
+            <div class="traffic-lights">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+            </div>
+            <div class="mac-title">Relatórios de NFCe</div>
+        </div>
+
+        <!-- BODY -->
+        <div class="mac-body">
+            <h2>Relatórios</h2>
+            
+            <!-- TIPO DE RELATÓRIO -->
+            <div class="field-group">
+                <label for="relatorio">Tipo de Relatório</label>
+                <select id="relatorio">
+                    <option>Relatório Gerencial de Vendas</option>
+                    <option>Relatório de Fechamento</option>
+                </select>
+            </div>
+
+            <!-- FILTROS DE PERÍODO -->
+            <div class="field-group">
+                <label for="data-inicio">Filtros de Período</label>
+                <div class="date-container">
+                    <input type="date" id="data-inicio">      
+                    <input type="date" id="data-fim">
+                </div>
+
+                
+            </div>
+
+            <!-- CHECKBOX / SWITCH -->
+            <div class="checkbox-container">
+                <label class="apple-switch">
+                    <input type="checkbox" id="checkSalvar">
+                    <span>Salvar Relatório [F2]</span>
+                </label>
+                <label class="apple-switch">
+                    <input type="checkbox" id="checkCancelados">
+                    <span>Exibir Cancelamentos [F3]</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="mac-footer">
+            <button class="btn-apple btn-secondary" id="btnCancelar">Cancelar</button>
+            <button class="btn-apple btn-primary" id="btnConfirmar">Confirmar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

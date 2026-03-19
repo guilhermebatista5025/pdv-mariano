@@ -1,0 +1,1092 @@
+:root {
+    --bg-main: #E6E6FA;
+    --header-blue: #1a1a5e;
+    --header-grad: linear-gradient(to bottom, #2a2a7e, #000040);
+    --grid-header: #1a1a5e;
+    --text-color: #000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Removemos a cor de fundo cinza e centralização, agora é tudo 100% */
+body {
+    background-color: var(--bg-main);
+    height: 100vh;
+    overflow: hidden;
+    /* Remove barras de rolagem do navegador */
+}
+
+.main-window {
+    width: 100vw;
+    /* Largura total da tela */
+    height: 100vh;
+    /* Altura total da tela */
+    max-width: none;
+    /* Remove o limite de tamanho */
+    background-color: var(--bg-main);
+    display: flex;
+    flex-direction: column;
+    border: none;
+    /* Remove a borda branca */
+    box-shadow: none;
+    /* Remove a sombra */
+}
+
+/* Header */
+.top-bar {
+    background: var(--header-grad);
+    color: white;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #fff;
+}
+
+.top-bar h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #000;
+    letter-spacing: 2px;
+}
+
+/* LETREIRO ANIMADO E ESTILIZADO CAIXA LIVRE */
+
+.info-left small {
+    font-size: 0.7rem;
+    color: #ccc;
+}
+
+.letreiro-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#titulo-operacao {
+    display: inline-block;
+    padding-left: 100%;
+    animation: rolar 8s linear infinite;
+}
+
+@keyframes rolar {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+
+/* Shortcuts Strip */
+.shortcuts-bar {
+    background-color: #ccc;
+    padding: 7px 10px;
+    border-bottom: 1px solid #999;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+
+/* Container do ícone */
+.wrapper-ajuda {
+    display: inline-flex;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.icone-f3 {
+    color: #000080;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+
+.icone-f3:hover {
+    transform: scale(1.2);
+}
+
+/* Janela Centralizada */
+.pop-up-central {
+    display: none; /* Escondido */
+    position: fixed; /* Fixa na tela, não na div */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza perfeito */
+    width: 450px;
+    background-color: #ffffca; /* Amarelo PDV */
+    border: 2px solid #000080;
+    box-shadow: 0 0 50px rgba(0,0,0,0.6); /* Sombra pesada para destacar */
+    z-index: 1000000; /* Acima de TUDO */
+    font-weight: normal;
+    pointer-events: none; /* Opcional: para o mouse não "travar" nela */
+}
+
+/* Cabeçalho da Janela */
+.ajuda-head {
+    background: #000080;
+    color: white;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Texto da Janela */
+.ajuda-body {
+    padding: 20px;
+    font-size: 14px;
+    color: #000;
+    line-height: 1.6;
+    text-transform: none; /* Ignora o uppercase do label */
+}
+
+.ajuda-body hr {
+    border: 0;
+    border-top: 1px dashed #999;
+    margin: 15px 0;
+}
+
+/* MOSTRAR AO PASSAR O MOUSE NO ÍCONE */
+.wrapper-ajuda:hover .pop-up-central {
+    display: block;
+}
+
+
+/* Layout Principal */
+.content-area {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Painel Esquerdo */
+.left-panel {
+    width: 580px;
+    background: #dcdcdc;
+    padding: 10px;
+    border: 1px solid #999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #777;
+    border-top: 2px solid #555;
+    border-left: 2px solid #555;
+    background-color: #fff;
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+input:focus {
+    background-color: #ffffcc;
+    outline: none;
+}
+
+input:disabled,
+input[readonly] {
+    background-color: #eee;
+}
+
+.row-split {
+    margin-top: 30px;
+    display: flex;
+    gap: 5px;
+}
+
+
+
+
+.discount-group {
+    font-size: 20px;
+    align-self: flex-start;
+    margin-top: 50px;
+}
+
+
+.row-values {
+    margin-top: 30px;
+    font-size: bold;
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+
+.row-values-2 {
+    margin-top: 5px;
+    font-size: bold;
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.col {
+    font-size: 20px;
+    flex: 1;
+}
+
+.display-value {
+    background: #e0e0e0;
+    border: 1px inset #fff;
+    padding: 5px;
+    margin-top: 30px;
+    text-align: right;
+    font-size: 1.2rem;
+    color: blue;
+    font-weight: bold;
+}
+
+.subtotal-group {
+    font-size: 20px;
+    margin-top: 50px;
+    align-self: flex-start;
+}
+
+.display-value {
+    margin-top: 15px;
+
+
+}
+
+
+.logo-area {
+    margin-top: auto;
+    color: #483d8b;
+}
+
+/* Painel Direito (Grid) */
+.right-panel {
+    flex: 1;
+    background-color: #fff;
+    border: 2px solid #999;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.grid-header {
+    background: var(--grid-header);
+    color: white;
+    display: grid;
+    grid-template-columns: 30px 60px 1fr 30px 50px 50px 80px 50px 80px 80px;
+    padding: 7px;
+    font-weight: bold;
+
+}
+
+.grid-body {
+    background: #e6e6fa;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.grid-row {
+    display: grid;
+    grid-template-columns: 30px 60px 1fr 30px 50px 50px 80px 50px 80px 80px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9rem;
+    color: #000080;
+}
+
+
+
+/* ===== Footer ===== */
+
+.bottom-bar {
+    background: var(--bg-main);
+    border-top: 2px solid #fff;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Parte principal */
+.footer-main {
+    display: flex;
+    align-items: center;
+}
+
+/* Agrupa logo + total normal */
+.footer-left-group {
+    display: flex;
+    align-items: center;
+    gap: 290px;
+
+}
+
+/* Empurra a big pra direita */
+.total-box.big {
+    margin-left: auto;
+
+}
+
+
+/* Logo */
+.footer-logo img {
+    height: 180px;
+    /* controla aqui */
+    width: auto;
+    margin-right: auto;
+}
+
+/* Totais */
+.footer-totals {
+    display: flex;
+    gap: 40px;
+    margin-left: auto;
+    /* empurra tudo pra direita */
+}
+
+.total-box {
+    display: flex;
+    align-self: flex-start;
+    min-width: 100px;
+    text-align: right;
+    gap: 10px;
+
+}
+
+.total-box span {
+    font-size: 1.3rem;
+}
+
+.total-box strong {
+    font-size: 1.4rem;
+}
+
+/* Barra inferior */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-family: monospace;
+    color: #000080;
+    border-top: 1px solid #ddd;
+    padding-top: 5px;
+}
+
+.resultado {
+    font-weight: 700;
+}
+
+/* PARTE DA FINALIZAÇÃO DA VENDA MAN  */
+
+/* GARANTE QUE NADA PRENDA A MODAL */
+.main-window {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: none;
+    /* começa escondida */
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99999;
+    /* acima de tudo */
+}
+
+/* Quando abrir */
+.modal-overlay.active {
+    display: flex;
+}
+
+/* CONTEÚDO DA MODAL */
+.modal-content {
+    background: #ffffff;
+    width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    border-radius: 8px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+
+    position: relative;
+}
+
+.modal-pdv {
+    width: 900px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* TOPO */
+.top-resumo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.campo input {
+    padding: 6px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+}
+
+.destaque-total input {
+    background: #1e40af;
+    color: white;
+    font-weight: bold;
+}
+
+/* INFO */
+.info-bloco {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* PAGAMENTOS */
+.pagamentos-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formas-pagamento,
+.desdobramento {
+    background: #f3f4f6;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.linha-pg {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.linha-pg label {
+    display: block;
+    margin-top: 18px;
+    font-size: 1.3rem;
+}
+
+.linha-pg input {
+    width: 150px;
+}
+
+.soma {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+/* DESDOBRAMENTO */
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.resumo-linha span {
+    display: block;
+    margin-top: 30px;
+    font-size: 1.5rem;
+}
+
+/* TROCO */
+.troco-box {
+    margin-top: 20px;
+    background: #dcfce7;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.troco-box h2 {
+    margin: 5px 0 0;
+    font-size: 22px;
+}
+
+/* RODAPÉ */
+.modal-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-confirmar {
+    background: #16a34a;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-cancelar {
+    background: #dc2626;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 4px;
+}
+
+
+/* PARTE DO F2 PARA APAGAR ITEM/PRODUTO MAN */
+
+/* Overlay do F2 - Fundo escuro */
+/* Fundo com desfoque (Blur) para dar profundidade */
+.modal-remover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    /* Efeito de vidro fosco no fundo */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+/* Caixa do Modal mais moderna */
+.modal-remover-box {
+    background: #ffffff;
+    padding: 45px;
+    border-radius: 25px;
+    /* Bordas bem arredondadas */
+    width: 430px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    /* Sombra suave e profunda */
+    border: none;
+    /* Removemos a borda grossa antiga */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Faixa de destaque no topo */
+.modal-remover-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    /* Degradê moderno */
+}
+
+.modal-remover-box h2 {
+    margin: 0;
+    color: #2d3436;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.modal-remover-box p {
+    color: #636e72;
+    margin: 15px 0;
+    font-size: 1rem;
+}
+
+/* Campo de entrada estiloso */
+#input-remover-seq {
+    width: 190px;
+    height: 70px;
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 20px 0;
+    border: 3px solid #dfe6e9;
+    border-radius: 15px;
+    background: #f1f2f6;
+    color: #2d3436;
+    transition: all 0.3s;
+    outline: none;
+}
+
+#input-remover-seq:focus {
+    border-color: #ff4b2b;
+    background: #fff;
+    box-shadow: 0 0 15px rgba(255, 75, 43, 0.2);
+}
+
+/* Botões com efeito Hover */
+.modal-remover-botoes {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-remover-botoes button {
+    flex: 1;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-confirmar {
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 75, 43, 0.3);
+}
+
+.btn-cancelar {
+    background: #dfe6e9;
+    color: #2d3436;
+}
+
+.modal-remover-botoes button:hover {
+    transform: translateY(-2px);
+    /* Botão levanta levemente */
+}
+
+.btn-confirmar:hover {
+    box-shadow: 0 6px 20px rgba(255, 75, 43, 0.4);
+}
+
+/* --- OVERLAY DO F4 (O fundo escuro) --- */
+.f4-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    /* O JS muda para flex */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* --- CAIXA DE CONTEÚDO (O Modal em si) --- */
+.f4-content {
+    background-color: #ebdff2;
+    /* Cor lilás clássica do sistema */
+    width: 850px;
+    border: 2px solid #483d8b;
+    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Header do Modal */
+.f4-header {
+    background: linear-gradient(to bottom, #2a2a7e, #000040);
+    color: white;
+    padding: 8px 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #fff;
+}
+
+/* Corpo do Modal (Grid de 2 colunas) */
+.f4-body {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    /* Esquerda menor que a direita */
+    gap: 30px;
+    padding: 40px;
+}
+
+/* Grid de Informações (Topo Esquerda) */
+.f4-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.f4-info-item span {
+    display: block;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+.f4-info-item strong {
+    color: #000080;
+    font-size: 1rem;
+}
+
+/* Tabela de Condições (Esquerda) */
+.f4-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #999;
+}
+
+.f4-table th {
+    background: #dcdcdc;
+    font-size: 0.8rem;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+.f4-table td {
+    padding: 6px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    color: #000080;
+}
+
+.f4-txt-right {
+    text-align: right;
+}
+
+.f4-row-highlight {
+    background-color: #f5f5dc;
+}
+
+/* Amarelo clarinho para destaque */
+
+/* Extrato de Valores (Direita) */
+.f4-extrato {
+    background: white;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+
+.f4-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.f4-operador {
+    width: 30px;
+    font-weight: bold;
+}
+
+.f4-label {
+    flex: 1;
+}
+
+.f4-valor {
+    font-weight: bold;
+    width: 100px;
+    text-align: right;
+}
+
+.blue {
+    color: #0000cd;
+}
+
+.red {
+    color: #cd0000;
+}
+
+.highlight-blue {
+    background-color: #e6f0ff;
+    font-weight: bold;
+}
+
+/* Caixa do Total Geral */
+.f4-total-box {
+    margin-top: 15px;
+    background: #000080;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Rodapé com Botões */
+.f4-footer {
+    grid-column: span 2;
+    /* Ocupa as duas colunas */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 30px;
+    background: #dcdcdc;
+    border-top: 1px solid #999;
+}
+
+.f4-btn {
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: 2px solid #777;
+    color: #000080;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.f4-btn:hover {
+    background: #fff;
+    border-color: #000;
+}
+
+
+/* parte do f9999999999999999999999999999999999999 */
+
+/* Fundo do Menu (Overlay) */
+#menu-principal-f9 {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 245, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Container Principal */
+.container-f9 {
+    background: rgba(255, 255, 255, 0.9);
+    width: 850px;
+    padding: 40px;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeScale 0.3s ease-out;
+}
+
+/* Header */
+.header-f9 { text-align: center; margin-bottom: 35px; }
+.header-f9 h2 { color: #1d1d1f; margin: 0; font-size: 34px; font-weight: 700; }
+.linha-decorativa { width: 40px; height: 4px; background: #0071e3; margin: 12px auto; border-radius: 10px; }
+.header-f9 p { color: #86868b; font-size: 15px; }
+
+/* Grid */
+.grid-f9 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Card Estilo Apple */
+.card-clean {
+    background: #ffffff;
+    border: 1px solid #e5e5e7;
+    padding: 25px 15px;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.card-clean:hover {
+    border-color: #0071e3;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.icon-f9 { font-size: 30px; margin-bottom: 10px; }
+.label-f9 { color: #1d1d1f; font-weight: 600; font-size: 14px; }
+.tecla-f9 { font-size: 11px; margin-top: 6px; font-weight: 700; }
+
+/* Footer */
+.footer-f9 { margin-top: 30px; text-align: center; color: #a1a1a6; font-size: 13px; }
+.footer-f9 span { background: #f5f5f7; padding: 2px 8px; border-radius: 5px; color: #1d1d1f; }
+
+/* Animação */
+@keyframes fadeScale {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+
+/* ICONE DO INPUT PRODUTO */
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.25s ease; /* animação suave */
+}
+
+/* hover */
+.input-wrapper i:hover {
+    color: #000;
+    transform: translateY(-50%) scale(1.15);
+}
+
+/* MODAL DO PRODUTO MAN  */
+
+/* OVERLAY */
+.pdv-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* MODAL */
+.pdv-modal {
+    width: 90%;
+    max-width: 1100px;
+    background: #f2f2f2;
+    border: 2px solid #999;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+/* TOPO */
+.pdv-top {
+    background: #dcdcdc;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #999;
+    font-weight: bold;
+}
+
+.pdv-top button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* FILTROS */
+.pdv-filtros {
+    padding: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #aaa;
+}
+
+.pdv-filtros input[type="text"] {
+    flex: 1;
+    padding: 4px;
+}
+
+/* TABELA */
+.pdv-tabela {
+    max-height: 300px;
+    overflow: auto;
+    background: #fff;
+}
+
+.pdv-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pdv-tabela th {
+    background: #2f5fa7;
+    color: #fff;
+    padding: 6px;
+    border: 1px solid #999;
+}
+
+.pdv-tabela td {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.pdv-tabela tr:hover {
+    background: #cce0ff;
+    cursor: pointer;
+}
+
+.pdv-tabela tr.ativo {
+    background: #2f5fa7;
+    color: #fff;
+}
+
+.pdv-tabela tr.selecionado {
+    background: #2f5fa7;
+    color: #fff;
+}
+
+
+/* FOOTER */
+.pdv-footer {
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    background: #e6e6e6;
+    border-top: 1px solid #999;
+}
+
+.pdv-footer button {
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+/*  PARTE DO MODAL FALHA DE PESQUISA DE PRODUTO */
+
+
+
+
+/* PARTE DA RESPONSIVIDADE */

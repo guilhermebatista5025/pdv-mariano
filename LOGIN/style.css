@@ -1,0 +1,275 @@
+:root {
+    --bg-body: #f3f4f6;
+    --bg-card: #ffffff;
+    --primary: #1a3a5a;
+    --accent: #f39200;
+    --primary-light: #eef2f6;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+}
+
+.app-container {
+    width: 750px;
+    min-height: 10px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.window-header {
+    background: #f9fafb;
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.window-header span.title {
+    font-size: 17px !important; /* Coloquei em PX pra você ver a diferença bruta */
+   
+    display: inline-block !important;
+}
+
+.dots {
+    display: flex;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close {
+    background: #ff5f57;
+}
+
+.minimize {
+    background: #febc2e;
+}
+
+.expand {
+    background: #28c840;
+}
+
+.window-header .title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.main-content {
+    padding: 40px;
+    padding-bottom: 40px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.input-group {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-main);
+}
+
+/* AQUI ESTAVA O ERRO: Mudei de .input-field para .input-wrapper */
+.input-wrapper {
+    background: #f9fafb;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.1);
+}
+
+.input-wrapper input {
+    border: none;
+    background: transparent;
+    padding: 14px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-main);
+    flex: 1;
+    /* Faz o input ocupar o espaço entre os ícones */
+}
+
+.input-wrapper i {
+    color: var(--text-muted);
+    width: 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+#toggle-senha:hover {
+    color: var(--accent);
+}
+
+.icon-box {
+    background: var(--primary-light);
+    width: 80px;
+    height: 80px;
+    margin-left: 30px;
+    margin-top: 50px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.primary-icon {
+    color: var(--primary);
+    width: 40px;
+    height: 40px;
+}
+
+.stats-grid {
+    margin-top: 40px;  /* Empurra para BAIXO */
+    margin-left: 35px; /* Empurra para a DIREITA */
+    
+}
+
+
+
+.stat-item {
+    margin-bottom: 15px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.highlight .stat-value {
+    color: var(--accent);
+}
+
+.action-footer {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+button {
+    flex: 1;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #d48100;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+    color: var(--text-main);
+}
+
+.system-bar {
+    padding: 10px 40px;
+    background: #f9fafb;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo img {
+    height: 100px;
+    width: auto;
+    display: block;
+}
+
+.live-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+
+#mensagem-boas-vindas {
+    /* ... mantenha as outras regras que já mandei ... */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease; /* O segredo da suavidade */
+}
+
+/* Essa classe o JS vai colocar e tirar para animar */
+#mensagem-boas-vindas.show {
+    opacity: 1;
+    transform: translateY(0);
+}

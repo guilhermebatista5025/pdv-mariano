@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function () {
+
     // === 1. Lógica do Olho (Senha) ===
     const senhaInput = document.getElementById('senha');
     const btnOlho = document.getElementById('toggle-senha');
 
     if (btnOlho && senhaInput) {
-        btnOlho.onclick = function() {
+        btnOlho.onclick = function () {
             if (senhaInput.type === 'password') {
                 senhaInput.type = 'text';
                 this.innerText = '🙈';
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const areaMensagem = document.getElementById('mensagem-boas-vindas');
 
     if (inputOperador && areaMensagem) {
-        inputOperador.addEventListener('input', function() {
+        inputOperador.addEventListener('input', function () {
             const valor = this.value.trim();
             areaMensagem.classList.remove('show');
 
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 areaMensagem.style.color = "#105ba6";
                 areaMensagem.innerText = "👨‍💻 SEJA BEM VINDO PROGRAMADOR ( ADM )";
                 setTimeout(() => areaMensagem.classList.add('show'), 10);
-            } 
+            }
             else if (valor === '2') {
                 areaMensagem.style.color = "#f39200";
                 areaMensagem.innerText = "🛠️ SEJA BEM VINDO MARIANO ( GESTOR )";
                 setTimeout(() => areaMensagem.classList.add('show'), 10);
-            } 
+            }
             else {
                 areaMensagem.innerText = "";
             }
@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // === 4. Botão Iniciar (LOGIN REAL) ===
     const btnIniciar = document.getElementById('btn-iniciar');
-    
+
     if (btnIniciar) {
-        btnIniciar.onclick = async function() {
+        btnIniciar.onclick = async function () {
             const operador = document.getElementById('operador').value.trim();
             const senha = document.getElementById('senha').value.trim();
 
@@ -73,25 +73,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        codigo_operador: operador, 
-                        senha: senha 
+                    body: JSON.stringify({
+                        codigo_operador: operador,
+                        senha: senha
                     })
                 });
 
                 const dados = await response.json();
 
                 if (response.ok) {
-                    // Salva os dados do usuário no navegador (Sessão)
                     localStorage.setItem('usuario', JSON.stringify(dados.user));
-                    
-                    alert(`✅ Login realizado! Bem-vindo, ${dados.user.nome}`);
 
-                    // Redireciona para a tela principal do PDV
-                    window.location.href = '/vendas'; 
-                } else {
-                    // Exibe a mensagem de erro que vem do Controller (ex: "Senha incorreta")
-                    alert(dados.message || "Erro ao acessar o sistema.");
+                    const user = dados.user;
+
+                    if (user.nivel_acesso === "dev") {
+                        alert("👨‍💻 Bem-vindo Programador");
+                    } else if (user.nivel_acesso === "owner") {
+                        alert("🛠️ Bem-vindo Gestor");
+                    }
+
+                    window.location.href = '/index.html';
                 }
 
             } catch (error) {

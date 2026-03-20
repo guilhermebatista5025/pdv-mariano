@@ -33,10 +33,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../LOGIN', 'index.html'));
 });
 
-// 7. O "Pega Tudo" para evitar o erro do Path-to-Regexp
-app.get(/^\/(.*)/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../LOGIN', 'index.html'));
-});
 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);

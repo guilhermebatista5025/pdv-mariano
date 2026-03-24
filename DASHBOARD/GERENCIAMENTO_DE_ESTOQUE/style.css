@@ -1,0 +1,451 @@
+/* ================================================================== 
+   CONFIGURAÇÕES GERAIS (USANDO SUAS CORES DA TELA DE LOGIN)
+   ================================================================== */
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #f3f4f6;
+    /* --bg-body */
+    color: #1f2937;
+    /* --text-main */
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================================================================== 
+   SIDEBAR (AZUL ESCURO PROFISSIONAL)
+   ================================================================== */
+.sidebar {
+    width: 250px;
+    background-color: #496b8e;
+    /* --primary */
+    color: #ffffff;
+    padding: 30px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 30px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    color: #eef2f6;
+    /* --primary-light */
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    background: rgba(243, 146, 0, 0.2);
+    /* --accent com transparência */
+    color: #ffffff;
+}
+
+.nav-item.active {
+    background-color: #f39200;
+    /* --accent (Laranja destaque) */
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(243, 146, 0, 0.3);
+}
+
+/* ================================================================== 
+   CONTEÚDO PRINCIPAL
+   ================================================================== */
+.content {
+    flex: 1;
+    padding: 40px 50px; /* Aumentei o respiro lateral da tela */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaço entre o título e os cards */
+}
+
+/* Título do Painel - Espaçamento inferior */
+.panel-header {
+    margin-bottom: 10px;
+}
+
+.panel-header h1 {
+    font-size: 1.6rem;
+    color: #1a3a5a;
+    /* --primary */
+    font-weight: 700;
+    margin-bottom: 15px; /* Espaço entre "Painel de Controle" e o botão "Filtrar" */
+}
+
+.btn-filter {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    /* --border-color */
+    padding: 10px 24px;
+    margin-top: 10px;
+    border-radius: 20px;
+    color: #6b7280;
+    /* --text-muted */
+    cursor: pointer;
+}
+
+/* ================================================================== 
+   CARDS DO PAINEL (GRID ESTILO REFERÊNCIA)
+   ================================================================== */
+.panel-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 40px; /* Aumentei de 25px para 40px */
+    align-items: start;
+}
+
+/* Cards de Valor (Esquerda) - Mais espaço entre um card e outro */
+.value-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Espaço entre os cards brancos da esquerda */
+}
+
+.card-simple {
+    background-color: #ffffff;
+    /* --bg-card */
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    /* Aplicando sua sombra da login */
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.card-simple .label {
+    color: #6b7280;
+    /* --text-muted */
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.value-main {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a3a5a;
+    /* --primary */
+    margin-top: 10px;
+}
+
+.value-sub {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 10px;
+}
+
+/* Card do Gráfico (Direita) - Mais respiro interno */
+.chart-card {
+    background-color: #ffffff;
+    padding: 40px; /* Bastante espaço interno para o gráfico não sufocar */
+    border-radius: 16px;
+    min-height: 450px; /* Garante que o card tenha um tamanho bom */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #e5e7eb;
+}
+
+.donut-chart-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    /* Mistura das suas cores no gráfico */
+    border: 35px solid #1a3a5a;
+    border-top-color: #f39200;
+    border-right-color: #6b7280;
+}
+
+.view-more {
+    color: #f39200;
+    /* --accent */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ================================================================== 
+   TABELA DE ESTOQUE
+   ================================================================== */
+.inventory-section {
+    margin-top: 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #eef2f6;
+    /* --primary-light */
+    color: #1a3a5a;
+    /* --primary */
+    padding: 20px 25px;
+
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Status com as cores de alerta */
+.status.in-stock {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status.low-stock {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status.out-of-stock {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* ================================================================== 
+   MODAL (POP-UP) - ESTRUTURA FIXA
+   ================================================================== */
+
+/* 1. O fundo escuro (Overlay) */
+.modal {
+    display: none; /* Mantido como none, o JS muda para flex */
+    position: fixed;
+    inset: 0; /* Atalho para top, bottom, left, right: 0 */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo um pouco mais escuro para destaque */
+    backdrop-filter: blur(5px); /* Desfoque no fundo */
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 2. A caixa branca centralizada */
+.modal-content {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px; /* Largura máxima confortável */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    position: relative;
+    animation: modalShow 0.3s ease-out; /* Animação de entrada */
+}
+
+/* Animação para o modal não aparecer "seco" */
+@keyframes modalShow {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================================== 
+   ESTILIZAÇÃO DOS INPUTS (PREMIUM)
+   ================================================================== */
+
+.modal-content h2 {
+    font-size: 1.6rem;
+    color: #1a3a5a;
+    margin: 0 0 25px 0;
+    font-weight: 700;
+}
+
+.modal-content label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #1f2937;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+    outline: none;
+    margin-bottom: 20px; /* Espaçamento entre campos */
+    box-sizing: border-box;
+}
+
+/* Efeito de foco inspirado na sua tela de login */
+.modal-content input:focus {
+    border-color: #f39200;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.15);
+}
+
+.modal-content input::placeholder {
+    color: #9ca3af;
+}
+
+/* Organizador de Grupos (Lado a Lado) */
+.input-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-row div {
+    flex: 1;
+}
+
+/* ================================================================== 
+   BOTÕES DE AÇÃO
+   ================================================================== */
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #f39200; /* Laranja da sua marca */
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px; /* Cantos arredondados iguais aos cards */
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre o "+" e o texto */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(243, 146, 0, 0.3); /* Sombra colorida suave */
+}
+
+/* Efeito ao passar o mouse */
+.btn-primary:hover {
+    background-color: #d88200; /* Laranja um pouco mais escuro */
+    transform: translateY(-2px); /* Eleva o botão levemente */
+    box-shadow: 0 6px 20px rgba(243, 146, 0, 0.4);
+}
+
+/* Efeito ao clicar */
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(243, 146, 0, 0.2);
+}
+
+/* Estilo do sinal de "+" para destaque */
+.btn-primary::before {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+
+.btn-save {
+    flex: 2; /* Botão de salvar fica maior */
+    background-color: #f39200;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    background-color: #d88200;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(243, 146, 0, 0.3);
+}
+
+.btn-cancel {
+    flex: 1;
+    background-color: #eef2f6;
+    color: #1a3a5a;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #e2e8f0;
+}
+
+/* SEÇÃO DOS RELATÓRIOS */
+
+/* Grid de 3 colunas para os relatórios */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+/* Ajuste para o texto de porcentagem nos relatórios */
+.status.in-stock {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+}
+
+/* Deixar a tabela de relatórios com linhas mais sutis */
+#lista-relatorio td {
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+
+
+
+
+/* LOGICA DAS SEÇÕES PODEREM TROCAR FAVOR NAO MEXER */
+
+/* Lógica de Abas */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* PLMDS N MECHE NESSE BAGULHO AI EM CIMA ^-^ */

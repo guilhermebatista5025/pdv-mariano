@@ -16,7 +16,7 @@
         <span style="font-size: 10px;">▼</span>
     `;
 
-    // 3. Aplica o Estilo Direto (Estilo Inline não falha)
+    // 3. Aplica o Estilo Direto
     Object.assign(barraLateral.style, {
         position: 'fixed',
         right: '0',
@@ -24,7 +24,7 @@
         transform: 'translateY(-50%)',
         width: '30px',
         height: '320px',
-        backgroundColor: '#3b429f', // Azul da foto
+        backgroundColor: '#3b429f',
         color: 'white',
         display: 'flex',
         flexDirection: 'column',
@@ -40,32 +40,26 @@
 
     // 4. Adiciona o evento de clique para abrir o menu
     barraLateral.onclick = function() {
-        console.log("Barra lateral clicada!");
-        // Aqui você pode chamar a função que abre o menu do F9
-        // Exemplo: abrirMenuF9(); 
+        abrirMenuF9(); 
     };
 
-    // 5. Joga no Body da página
     document.body.appendChild(barraLateral);
-    console.log("Barra F9 injetada com sucesso no canto direito!");
 })();
 
-// 1. Função que gera o Menu Moderno
-// Função para abrir o menu
+// --- LÓGICA DO MENU ---
+
 const abrirMenuF9 = () => {
-    // 1. Tenta achar o menu se ele já existir
     let menu = document.getElementById('menu-principal-f9');
 
-    // 2. Se já existir, apenas alterna entre mostrar e esconder
     if (menu) {
         menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'flex' : 'none';
         return;
     }
 
-    // 3. Se não existir, cria do zero
     menu = document.createElement('div');
     menu.id = 'menu-principal-f9';
     
+    // Insira os links desejados no último parâmetro de cada renderCard
     menu.innerHTML = `
         <div class="container-f9">
             <div class="header-f9">
@@ -75,18 +69,18 @@ const abrirMenuF9 = () => {
             </div>
 
             <div class="grid-f9">
-                ${renderCard('Pagamento', 'F1', '💰', '#34c759')}
-                ${renderCard('Cancelar', 'F2', '❌', '#ff3b30')}
-                ${renderCard('Consulta', 'F3', '🔍', '#0071e3')}
-                ${renderCard('Outros', 'F5', '📋', '#ff9500')}
-                ${renderCard('Fichas', 'F6', '👤', '#af52de')}
-                ${renderCard('NFCe', 'F7', '🌐', '#5ac8fa')}
-                ${renderCard('Receber', 'F8', '🤲', '#5856d6')}
-                ${renderCard('Preços', 'F9', '🏷️', '#ff2d55')}
-                ${renderCard('Tele-Ped', 'F10', '📞', '#30b0c7')}
-                ${renderCard('Relatórios', 'Ctrl+R', '📄', '#8e8e93')}
-                ${renderCard('Busca', 'Ctrl+F', '🔎', '#ffcc00')}
-                ${renderCard('Finalizar', 'F11', '🚪', '#000000')}
+                    ${renderCard('Pagamento', 'F1', '💰', '#34c759', '/pagamento')}
+                    ${renderCard('Cancelar', 'F2', '❌', '#ff3b30', '/cancelar')}
+                    ${renderCard('Consulta', 'F3', '🔍', '#0071e3', '/consulta')}
+                    ${renderCard('Outros', 'F5', '📋', '#ff9500', '/outros')}
+                    ${renderCard('Fichas', 'F6', '👤', '#af52de', '/fichas')}
+                    ${renderCard('NFCe', 'F7', '🌐', '#5ac8fa', '/nfce')}
+                    ${renderCard('Receber', 'F8', '🤲', '#5856d6', '/receber')}
+                    ${renderCard('Preços', 'F9', '🏷️', '#ff2d55', '/precos')}
+                    ${renderCard('Tele-Ped', 'F10', '📞', '#30b0c7', '/tele-ped')}
+                    ${renderCard('Relatórios', 'Ctrl+R', '📄', '#8e8e93', '../DASHBOARD/GERENCIAMENTO_DE_RELATORIOS/index.html')}
+                    ${renderCard('Busca', 'Ctrl+F', '🔎', '#ffcc00', '/busca')}
+                    ${renderCard('Finalizar', 'F11', '🚪', '#000000', '/sair')}
             </div>
 
             <div class="footer-f9">
@@ -98,10 +92,18 @@ const abrirMenuF9 = () => {
     document.body.appendChild(menu);
 };
 
-// Função para gerar os cards
-function renderCard(label, tecla, icon, cor) {
+/**
+ * @param {string} label - Nome da opção
+ * @param {string} tecla - Atalho visual
+ * @param {string} icon - Emoji/Ícone
+ * @param {string} cor - Cor do atalho
+ * @param {string} url - Link para onde vai redirecionar
+ */
+function renderCard(label, tecla, icon, cor, url) {
     return `
-        <div class="card-clean" onclick="console.log('Ação: ${label}')">
+        <div class="card-clean" 
+             onclick="window.location.href='${url}'" 
+             style="cursor: pointer;">
             <div class="icon-f9">${icon}</div>
             <div class="label-f9">${label}</div>
             <div class="tecla-f9" style="color: ${cor}">${tecla}</div>
@@ -111,7 +113,6 @@ function renderCard(label, tecla, icon, cor) {
 
 // --- EVENTOS ---
 
-// Atalhos de Teclado
 window.addEventListener('keydown', (e) => {
     if (e.key === "F9") {
         e.preventDefault();
@@ -123,9 +124,8 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-// Clique na barra lateral (independente de como ela foi criada)
 document.addEventListener('click', (e) => {
-    if (e.target.closest('#sidebar-f9') || e.target.closest('#barra-f9-injetada')) {
+    if (e.target.closest('#barra-f9-injetada')) {
         abrirMenuF9();
     }
 });

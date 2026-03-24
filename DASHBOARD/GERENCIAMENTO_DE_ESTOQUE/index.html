@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RefriControl | Gestão de Estoque</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="../../IMAGENS/ChatGPT Image 11 de fev. de 2026, 11_13_22.png" alt="Refrigeração Mariano"
+                    class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li class="nav-item active" data-target="painel">Painel</li>
+                    <li class="nav-item" data-target="estoque">Estoque</li>
+                    <li class="nav-item" data-target="relatorios">Relatórios</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <section id="painel" class="tab-content active">
+                <div class="panel-header">
+                    <h1>Painel de Controle</h1>
+                    <button class="btn-filter">
+                        <i class="icon-filter"></i> Filtrar
+                    </button>
+                </div>
+
+                <div class="panel-grid">
+                    <div class="value-cards">
+                        <div class="card-simple">
+                            <span class="label">Ganho Líquido Previsto</span>
+                            <div id="ganho-total" class="value-main">R$ 0,00</div>
+                        </div>
+                        <div class="card-simple">
+                            <span class="label">Investimento (Custo)</span>
+                            <div id="total-custo-painel" class="value-sub">R$ 0,00</div>
+                        </div>
+                        <div class="card-simple">
+                            <span class="label">Faturamento Bruto</span>
+                            <div id="total-venda-painel" class="value-sub">R$ 0,00</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Categorias</h3>
+                        </div>
+                        <div class="chart-content">
+                            <div class="donut-chart-placeholder">
+                                <div class="donut"></div>
+                            </div>
+                            <div class="chart-legend" id="legenda-categorias">
+                            </div>
+                        </div>
+                        <a href="#" class="view-more"
+                            onclick="document.querySelector('[data-target=\'relatorios\']').click()">Ver mais</a>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!----------------- INICIO DA SEÇÃO DE ESTOQUE ------------------>
+
+            <section id="estoque" class="tab-content">
+                <header>
+                    <h1>Gerenciar Estoque</h1>
+                    <button id="btnAbrirModal" class="btn-primary">+ Novo Produto</button>
+                </header>
+                <div class="inventory-section">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Qtd</th>
+                                <th>Status</th>
+                                <th>Preço Venda</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-produtos"></tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- FINAL AQUI -->
+
+
+            <!--------------------- INICIO DA SEÇÃO RELATORIOS AQUI  --------------------------->
+
+            <div id="relatorios" class="tab-content">
+                <div class="panel-header">
+                    <h1>Relatórios de Desempenho</h1>
+                    <button id="btnExportarPDF" class="btn-filter">📥 Exportar PDF</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="card-simple">
+                        <span class="label">Faturamento Total</span>
+                        <div class="value-main" id="rel-faturamento">R$ 0,00</div>
+                        <span class="status in-stock" style="margin-top: 10px; display: inline-block;">+12% este
+                            mês</span>
+                    </div>
+                    <div class="card-simple">
+                        <span class="label">Investimento em Peças</span>
+                        <div class="value-main" id="rel-investimento" style="color: #64748b;">R$ 0,00</div>
+                    </div>
+                    <div class="card-simple" style="border-left: 5px solid #f39200;">
+                        <span class="label">Lucro Líquido Real</span>
+                        <div class="value-main" id="rel-lucro" style="color: #1a3a5a;">R$ 0,00</div>
+                    </div>
+                </div>
+
+                <div class="inventory-section" style="margin-top: 30px;">
+                    <div
+                        style="padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0; color: #1a3a5a;">Produtos mais Lucrativos</h3>
+                        <a href="#" class="view-more">Ver análise completa</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Vendas Estimadas</th>
+                                <th>Custo Total</th>
+                                <th>Margem Real</th>
+                                <th>Lucro Previsto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-relatorio">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <div id="modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Cadastrar Produto</h2>
+
+                <div class="input-row">
+                    <div>
+                        <label>Nome do Produto</label>
+                        <input type="text" id="nome" placeholder="Ex: Compressor 1/4 HP">
+                    </div>
+                    <div>
+                        <label>Categoria</label>
+                        <input type="text" id="categoria" placeholder="Ex: Peças">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <label>Preço de Custo</label>
+                        <input type="number" id="custo" placeholder="R$ 0,00">
+                    </div>
+                    <div>
+                        <label>Markup (%)</label>
+                        <input type="number" id="markup" placeholder="Ex: 40">
+                    </div>
+                </div>
+
+                <div>
+                    <label>Quantidade em Estoque</label>
+                    <input type="number" id="estoque" placeholder="Ex: 10">
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btnSalvar" class="btn-save">Salvar Produto</button>
+                    <button id="btnFechar" class="btn-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+        <script src="script.js"></script>
+</body>
+
+</html>

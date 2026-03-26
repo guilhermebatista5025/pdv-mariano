@@ -1,287 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Gerenciamento de Clientes</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parceiro – Contas a Receber</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
 </head>
 <body>
 
-<section id="clientes" class="tab-content">
+<!-- ── TOP BAR ── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">P</div>
+    <div>
+      <div class="topbar-title">SOFTDIAMONDS</div>
+      <div class="topbar-sub">Contas a Receber — Manutenção</div>
+    </div>
+  </div>    
+  <div class="topbar-right">
+    <span>Data Base: <span style="color:var(--blue)" id="dataBase">21/02/2026</span></span>
+    <span>Operador: <span style="color:var(--txt-primary)">REFRIGERÇÃO MARIANO</span></span>
+    <span>Série: 1 | Chave: 2730</span>
+  </div>
+</div>  
 
-    <!-- Header da seção -->
-    <div class="cli-page-header">
-        <div class="header-left">
-            <h1>Gerenciamento de Clientes</h1>
-            <!-- Barra de busca principal — busca por nome, CPF ou código -->
-            <div class="cli-search-wrapper">
-                <span class="cli-search-icon">🔍</span>
-                <input
-                    type="text"
-                    id="cliBusca"
-                    class="cli-search-input"
-                    placeholder="Buscar por nome, CPF ou código do cliente..."
-                    autocomplete="off"
-                />
-                <!-- Dropdown de sugestões em tempo real -->
-                <div id="cliSugestoes" class="cli-sugestoes" style="display:none;"></div>
-            </div>
-        </div>
-        <button id="cliBtnNovo" class="btn-primary">+ Novo Cliente</button>
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- PANEL PRINCIPAL -->
+  <div class="panel">
+
+    <!-- HEADER -->
+    <div class="panel-header">
+      <div class="panel-dot"></div>
+      <h2>Contas a Receber — Manutenção</h2>
+      <div style="margin-left:auto;display:flex;gap:6px;">
+        <button class="btn btn-default btn-sm" onclick="limparFiltros()">⟳ Limpar Filtros</button>
+        <button class="btn btn-default btn-sm">🖨 Imprimir</button>
+        <button class="btn btn-default btn-sm">↩ Retornar</button>
+      </div>
     </div>
 
-    <!-- ── PAINEL VAZIO (quando nenhum cliente está selecionado) ── -->
-    <div id="cliEstadoInicial" class="cli-estado-inicial">
-        <div class="cli-empty-icon">👥</div>
-        <p class="cli-empty-title">Busque um cliente para começar</p>
-        <p class="cli-empty-sub">Digite o nome, CPF ou código na barra acima para carregar o perfil.</p>
+    <!-- FILTERS -->
+    <div class="filter-area">
+
+      <!-- Exibir -->
+      <div class="filter-group">
+        <label>Exibir</label>
+        <div class="radio-group">
+          <label><input type="radio" name="exibir" value="todas"> Todas</label>
+          <label class="active-radio"><input type="radio" name="exibir" value="aberto" checked> Em Aberto</label>
+          <label><input type="radio" name="exibir" value="recebidas"> Recebidas</label>
+          <label><input type="radio" name="exibir" value="renegociadas"> Renegociadas</label>
+        </div>
+      </div>
+
+      <!-- Cliente -->
+      <div class="filter-group" style="flex:1;min-width:220px;">
+        <label>Cliente</label>
+        <div class="filter-inline">
+          <input type="text" id="inputCliente" placeholder="Nome ou código..." style="flex:1" />
+          <button class="btn btn-blue btn-sm" onclick="buscarCliente()">🔍 Buscar</button>
+          <button class="btn btn-default btn-sm btn-ficha" onclick="abrirFicha()">📋 Ficha</button>
+        </div>
+      </div>
+
+      <!-- Período -->
+        <div class="filter-group">
+            <label>Período (Vencimento)</label>
+            <div class="filter-inline">
+            <input type="date" id="periodoDe" />
+            <span style="color:var(--txt-dim);font-size:11px;">até</span>
+            <input type="date" id="periodoAte" />
+            </div>
+        </div>
+
+      <!-- Organizar por -->
+      <div class="filter-group">
+        <label>Organizar por</label>
+        <div class="radio-group">
+          <label><input type="radio" name="org" value="doc"> Documento</label>
+          <label><input type="radio" name="org" value="emissao"> Dt Emissão</label>
+          <label class="active-radio"><input type="radio" name="org" value="venc" checked> Dt Vencimento</label>
+          <label><input type="radio" name="org" value="pag"> Dt Pagamento</label>
+        </div>
+      </div>
+
     </div>
 
-    <!-- ── PERFIL COMPLETO DO CLIENTE (carregado após busca) ── -->
-    <div id="cliPerfil" class="cli-perfil" style="display:none;">
-
-        <!-- Cabeçalho do perfil -->
-        <div class="cli-perfil-header">
-            <div class="cli-avatar" id="cliAvatar">MM</div>
-            <div class="cli-perfil-info">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <h2 id="cliNomeExibido">—</h2>
-                    <span id="cliStatusBadge" class="cli-badge cli-badge-ativo">Ativo</span>
-                </div>
-                <div class="cli-meta-row">
-                    <span>📱 <span id="cliTelExibido">—</span></span>
-                    <span>📍 <span id="cliEndExibido">—</span></span>
-                    <span>🔖 Cód: <strong id="cliCodExibido">—</strong></span>
-                    <span>🪪 CPF: <span id="cliCpfExibido">—</span></span>
-                </div>
-            </div>
-            <div class="cli-perfil-acoes">
-                <button class="btn-filter" onclick="cliEditarCliente()">✏️ Editar</button>
-                <button class="btn-filter" onclick="cliImprimirRecibo()">🖨️ Recibo</button>
-            </div>
-        </div>
-
-        <!-- Cards de resumo financeiro do cliente -->
-        <div class="cli-resumo-grid">
-            <div class="cli-resumo-card">
-                <span class="label">Total Gasto</span>
-                <div class="value-main" id="cliTotalGasto">R$ 0,00</div>
-            </div>
-            <div class="cli-resumo-card">
-                <span class="label">Em Aberto</span>
-                <div class="value-main" style="color:#b91c1c;" id="cliTotalAberto">R$ 0,00</div>
-            </div>
-            <div class="cli-resumo-card">
-                <span class="label">Compras no Prazo</span>
-                <div class="value-main" id="cliQtdPrazo">0</div>
-            </div>
-            <div class="cli-resumo-card">
-                <span class="label">Última Compra</span>
-                <div class="value-main" style="font-size:1.2rem;" id="cliUltimaCompra">—</div>
-            </div>
-        </div>
-
-        <!-- Abas internas: Compras / Pendências -->
-        <div class="cli-tabs">
-            <button class="cli-tab-btn active" onclick="cliMostrarAba(this,'compras')">📋 Compras</button>
-            <button class="cli-tab-btn" onclick="cliMostrarAba(this,'pendencias')">⏳ Pendências</button>
-        </div>
-
-        <!-- ABA: COMPRAS -->
-        <div id="cli-aba-compras" class="cli-aba active">
-            <div class="cli-aba-header">
-                <h3>Histórico de Compras</h3>
-                <button class="btn-primary" style="font-size:0.85rem; padding:8px 16px;" onclick="cliAbrirNovaCompra()">+ Registrar Compra</button>
-            </div>
-
-            <!-- Filtro de forma de pagamento -->
-            <div class="cli-filtro-row">
-                <span style="font-size:0.85rem; color:#6b7280; font-weight:600;">Filtrar:</span>
-                <button class="cli-filtro-btn active" onclick="cliFiltrarCompras(this,'todos')">Todos</button>
-                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Dinheiro')">💵 Dinheiro</button>
-                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Pix')">📱 Pix</button>
-                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Cartão')">💳 Cartão</button>
-                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Prazo')">📅 Prazo</button>
-            </div>
-
-            <div class="inventory-section" style="margin-top:12px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Descrição</th>
-                            <th>Pagamento</th>
-                            <th>Valor</th>
-                            <th>Vencimento</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cliListaCompras"></tbody>
-                </table>
-                <div id="cliComprasVazio" class="empty-state" style="display:none;">
-                    <div class="empty-icon">🛒</div>
-                    <p class="empty-title">Nenhuma compra registrada</p>
-                    <p class="empty-sub">Clique em "+ Registrar Compra" para adicionar.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ABA: PENDÊNCIAS -->
-        <div id="cli-aba-pendencias" class="cli-aba" style="display:none;">
-            <div class="cli-aba-header">
-                <h3>Contas Pendentes</h3>
-                <!-- Toggle juros -->
-                <label class="cli-toggle-label">
-                    <input type="checkbox" id="cliToggleJuros" onchange="cliAtualizarPendencias()">
-                    <span>Aplicar juros (% a.m.)</span>
-                    <input type="number" id="cliTaxaJuros" value="2" min="0" max="100" step="0.1"
-                        style="width:60px; padding:4px 8px; border-radius:8px; border:1px solid #e5e7eb; font-size:0.85rem;">
-                </label>
-            </div>
-
-            <div class="inventory-section" style="margin-top:12px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Descrição</th>
-                            <th>Valor Original</th>
-                            <th>Vencimento</th>
-                            <th>Dias em Atraso</th>
-                            <th>Valor com Juros</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cliListaPendencias"></tbody>
-                </table>
-                <div id="cliPendenciasVazio" class="empty-state" style="display:none;">
-                    <div class="empty-icon">✅</div>
-                    <p class="empty-title">Nenhuma pendência!</p>
-                    <p class="empty-sub">Este cliente está em dia com todos os pagamentos.</p>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- fim cli-perfil -->
-
-</section>
-
-
-<!-- ========================================================
-     MODAL: CADASTRAR / EDITAR CLIENTE
-     Cole antes do fechamento do </div> do .container
-     ======================================================== -->
-<div id="modalCliente" class="modal" style="display:none;">
-    <div class="modal-content" style="max-width:600px;">
-        <h2 id="modalClienteTitulo">Cadastrar Cliente</h2>
-
-        <div class="input-row">
-            <div>
-                <label>Nome completo</label>
-                <input type="text" id="cliNome" placeholder="Ex: João da Silva">
-            </div>
-            <div>
-                <label>Código do cliente</label>
-                <input type="text" id="cliCod" placeholder="Ex: CLI-001">
-            </div>
-        </div>
-
-        <div class="input-row">
-            <div>
-                <label>CPF</label>
-                <input type="text" id="cliCpf" placeholder="000.000.000-00" maxlength="14">
-            </div>
-            <div>
-                <label>Telefone</label>
-                <input type="text" id="cliTel" placeholder="(27) 99999-0000">
-            </div>
-        </div>
-
-        <div>
-            <label>Endereço</label>
-            <input type="text" id="cliEnd" placeholder="Rua, número, bairro, cidade">
-        </div>
-
-        <div class="input-row" style="margin-top:4px;">
-            <div>
-                <label>Status</label>
-                <select id="cliStatus" style="width:100%; padding:14px 16px; border:1.5px solid #e5e7eb; border-radius:12px; font-size:1rem; background:#f9fafb; color:#1f2937; outline:none;">
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
-                </select>
-            </div>
-            <div>
-                <label>Limite a prazo (R$)</label>
-                <input type="number" id="cliLimite" placeholder="Ex: 500">
-            </div>
-        </div>
-
-        <div class="modal-actions">
-            <button id="cliSalvarBtn" class="btn-save" onclick="cliSalvarCliente()">Salvar Cliente</button>
-            <button class="btn-cancel" onclick="cliFecharModal()">Cancelar</button>
-        </div>
+    <!-- CLIENT BADGE -->
+    <div class="client-badge" id="clienteBadge">
+      <span class="client-code" id="clienteCode">353</span>
+      <span class="client-name" id="clienteNome">MARIA APARECIDA DE PAULA SANTOS</span>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <div class="info-chip">F9 – Juros (Mês): <span>5,00%</span></div>
+        <div class="info-chip">Carência: <span>3 dias</span></div>
+      </div>
     </div>
+
+    <!-- ACTION BAR -->
+    <div class="action-bar" id="actionBar" style="display:none">
+      <button class="btn btn-primary btn-sm">➕ Lançar</button>
+      <button class="btn btn-default btn-sm">📥 Baixar Selecionados</button>
+      <div class="action-bar-right">
+        <span style="font-size:11px;color:var(--txt-sec)">Ctrl+B Baixa:</span>
+        <input type="text" value="0,00" style="width:80px;text-align:right" />
+        <button class="btn btn-default btn-sm">⚙ Opções</button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table id="tabelaContas">
+        <thead>
+          <tr>
+            <th class="cb-col"><input type="checkbox" id="checkAll" onchange="toggleAll(this)" /></th>
+            <th>Documento</th>
+            <th>Nota/Cupom</th>
+            <th>Par</th>
+            <th>Esp</th>
+            <th>Ser</th>
+            <th>Cliente</th>
+            <th>Emissão</th>
+            <th class="right">Valor</th>
+            <th>Vencimento</th>
+            <th>Prorrogação</th>
+            <th class="center">Dias</th>
+            <th class="right">Juros Ativo</th>
+            <th class="right">Valor Pago</th>
+            <th>Pagamento</th>
+            <th class="right">Em Aberto</th>
+            <th class="center">Ação</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyContas">
+          <!-- Filled by JS -->
+        </tbody>
+      </table>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" id="emptyState">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p>Nenhum registro encontrado.</p>
+        <p style="font-size:11px">Pesquise um cliente para exibir os títulos em aberto.</p>
+      </div>
+    </div>
+
+    <!-- TOTALS -->
+    <div class="totals-bar" id="totalsBar" style="display:none">
+      <div class="total-item">
+        <span class="total-label">Total Sem Juros</span>
+        <span class="total-value blue" id="totSemJuros">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Total Com Juros</span>
+        <span class="total-value yellow" id="totComJuros">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Total Vencido</span>
+        <span class="total-value danger" id="totVencido">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Total a Vencer</span>
+        <span class="total-value success" id="totVencer">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Total Pago</span>
+        <span class="total-value" id="totPago">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Juros Pago</span>
+        <span class="total-value" id="totJurosPago">0,00</span>
+      </div>
+      <div class="total-item">
+        <span class="total-label">Crédito Disponível</span>
+        <span class="total-value" id="totCredito">0,00</span>
+      </div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <div class="status-item">Qtd. Documentos: <strong id="qtdDocs">0</strong></div>
+      <div class="status-item">Média de Atraso: <strong id="mediaAtraso">0</strong></div>
+      <div class="status-item">Conta Financeira: <strong id="contaFin">—</strong></div>
+      <div class="status-item">Nosso Nº: <strong id="nossoNum">—</strong></div>
+      <div class="status-item" style="margin-left:auto;color:var(--txt-dim);font-size:10px">
+        Vencimento Certificado: 08/01/27
+      </div>
+    </div>
+
+  </div>
+</div><!-- /main -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL DE BAIXA
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalBaixa">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h3>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Finalizar Pagamento
+      </h3>
+      <button class="modal-close" onclick="fecharModal()">✕</button>
+    </div>
+
+    <div class="modal-body" id="modalBodyNormal">
+
+      <!-- Informações do título -->
+      <div class="info-card">
+        <div class="info-row full">
+          <label>Cliente</label>
+          <span id="mCliente" style="font-family:var(--font-ui);font-size:14px;font-weight:600;">—</span>
+        </div>
+        <div class="info-row">
+          <label>Documento / Parcela</label>
+          <span id="mDocumento">—</span>
+        </div>
+        <div class="info-row">
+          <label>Emissão</label>
+          <span id="mEmissao">—</span>
+        </div>
+        <div class="info-row">
+          <label>Vencimento</label>
+          <span id="mVencimento">—</span>
+        </div>
+        <div class="info-row">
+          <label>Dias em Atraso</label>
+          <span id="mDias" class="red">—</span>
+        </div>
+        <div class="info-row">
+          <label>Valor Original</label>
+          <span id="mValor">—</span>
+        </div>
+        <div class="info-row">
+          <label>Juros Calculado</label>
+          <span id="mJuros" class="red">—</span>
+        </div>
+        <div class="info-row full">
+          <label>Total a Receber</label>
+          <span id="mTotal" class="big">—</span>
+        </div>
+      </div>
+
+      <!-- Alerta de juros (se houver) -->
+      <div class="juros-alert" id="jurosAlert" style="display:none">
+        ⚠️ <div><strong>Título com atraso</strong> — Juros de mora calculados automaticamente (5,00% a.m. com carência de 3 dias).</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Formulário de pagamento -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Data de Pagamento</label>
+          <input type="date" id="mDataPag" />
+        </div>
+        <div class="form-group">
+          <label>Forma de Pagamento</label>
+          <select id="mFormaPag">
+            <option value="pix">PIX</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="cartao_deb">Cartão Débito</option>
+            <option value="cartao_cred">Cartão Crédito</option>
+            <option value="transferencia">Transferência</option>
+            <option value="boleto">Boleto</option>
+            <option value="cheque">Cheque</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Valor Recebido (R$)</label>
+          <input type="text" id="mValorRec" placeholder="0,00" />
+        </div>
+        <div class="form-group">
+          <label>Desconto (R$)</label>
+          <input type="text" id="mDesconto" placeholder="0,00" />
+        </div>
+        <div class="form-group full">
+          <label>Observação</label>
+          <input type="text" id="mObs" placeholder="Observação opcional..." />
+        </div>
+      </div>
+
+    </div><!-- /modal-body-normal -->
+
+    <!-- Success state -->
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-circle">✓</div>
+      <div class="success-title">Baixa Realizada!</div>
+      <div class="success-sub" id="successMsg">Pagamento registrado com sucesso.</div>
+    </div>
+
+    <div class="modal-footer" id="modalFooter">
+      <button class="btn btn-default" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmarBaixa()">✔ Confirmar Baixa</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL DE FICHA
+══════════════════════════════════════════════════════════ -->
+
+<!-- MODAL FICHA NOVO -->
+<div id="fichaOverlay" class="ficha-overlay">
+
+  <div class="ficha-box">
+
+    <div class="ficha-header">
+      <h3>Clientes em Atraso</h3>
+      <button class="ficha-close" onclick="fecharFicha()">✕</button>
+    </div>
+
+    <div class="ficha-body" id="listaAtrasados">
+      <!-- preenchido via JS -->
+    </div>
+
+  </div>
+
 </div>
 
 
-<!-- ========================================================
-     MODAL: REGISTRAR NOVA COMPRA
-     ======================================================== -->
-<div id="modalCompra" class="modal" style="display:none;">
-    <div class="modal-content" style="max-width:520px;">
-        <h2>Registrar Compra</h2>
-
-        <div>
-            <label>Descrição do serviço / produto</label>
-            <input type="text" id="compraDesc" placeholder="Ex: Recarga gás R134a + mão de obra">
-        </div>
-
-        <div class="input-row">
-            <div>
-                <label>Valor (R$)</label>
-                <input type="number" id="compraValor" placeholder="0,00">
-            </div>
-            <div>
-                <label>Data</label>
-                <input type="date" id="compraData">
-            </div>
-        </div>
-
-        <div class="input-row">
-            <div>
-                <label>Forma de pagamento</label>
-                <select id="compraPagamento" style="width:100%; padding:14px 16px; border:1.5px solid #e5e7eb; border-radius:12px; font-size:1rem; background:#f9fafb; color:#1f2937; outline:none;" onchange="cliToggleVencimento()">
-                    <option value="Dinheiro">💵 Dinheiro</option>
-                    <option value="Pix">📱 Pix</option>
-                    <option value="Cartão">💳 Cartão</option>
-                    <option value="Prazo">📅 Prazo</option>
-                </select>
-            </div>
-            <!-- Vencimento aparece só quando for "Prazo" -->
-            <div id="wrapperVencimento" style="display:none;">
-                <label>Data de vencimento</label>
-                <input type="date" id="compraVencimento">
-            </div>
-        </div>
-
-        <div class="modal-actions">
-            <button class="btn-save" onclick="cliSalvarCompra()">Salvar Compra</button>
-            <button class="btn-cancel" onclick="cliFecharModalCompra()">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-
-<!-- ========================================================
-     ÁREA DE IMPRESSÃO DO RECIBO (invisível na tela)
-     ======================================================== -->
-<div id="areaRecibo" style="display:none;">
-    <div id="conteudoRecibo"></div>
-</div>
 
 
 
 
-    <script src="script.js"></script>
+
+<script src="script.js"></script>
 </body>
 </html>

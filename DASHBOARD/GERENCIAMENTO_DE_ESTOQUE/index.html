@@ -26,8 +26,12 @@
                     <li class="nav-item" data-target="relatorios">Relatórios</li>
                 </ul>
             </nav>
-        </aside>
 
+            <div class="sidebar-footer">
+                <a href="../../FRONT-END/index.html" class="btn-logout">Sair</a>
+            </div>
+
+        </aside>
         <main class="content">
 
             <!-- ========================================================
@@ -58,10 +62,22 @@
                         </div>
 
                         <!-- NOVO: Badge de alertas de estoque baixo -->
-                        <div class="card-simple card-alerta" id="card-alerta-wrapper" style="display:none;">
+                        <div class="card-simple card-alerta" id="card-alerta-wrapper" style="display:none;"
+                            onclick="abrirModalAlertas()">
                             <span class="label">⚠️ Produtos em Alerta</span>
                             <div id="alerta-qtd" class="value-main" style="color:#b91c1c;">0</div>
                             <span style="font-size:0.8rem; color:#6b7280;">produtos abaixo do mínimo</span>
+                        </div>
+                    </div>
+
+                    <!-- Modal de produtos em alerta -->
+                    <div id="modal-alertas" class="modal-alertas">
+                        <div class="modal-alertas-content">
+                            <div class="modal-alertas-header">
+                                <h2>⚠️ Produtos em Alerta</h2>
+                                <button class="btn-fechar-alertas" onclick="fecharModalAlertas()">✕</button>
+                            </div>
+                            <div id="lista-alertas"></div>
                         </div>
                     </div>
 

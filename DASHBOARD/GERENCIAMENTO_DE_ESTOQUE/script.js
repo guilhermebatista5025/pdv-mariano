@@ -482,3 +482,35 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizar();
 
 }); // fim DOMContentLoaded
+
+// Abre o modal e renderiza os produtos abaixo do mínimo
+function abrirModalAlertas() {
+    const produtos = JSON.parse(localStorage.getItem('refricontrol_estoque') || '[]');
+    const emAlerta = produtos.filter(p => p.minimo && p.qtd < p.minimo);
+
+    const lista = document.getElementById('lista-alertas');
+    lista.innerHTML = emAlerta.map(p => `
+        <div class="alerta-item">
+            <div>
+                <div class="alerta-item-nome">${p.nome}</div>
+                <div class="alerta-item-cat">${p.cat}</div>
+            </div>
+            <div class="alerta-item-qtd">
+                <span>${p.qtd} un.</span>
+                <small>mínimo: ${p.minimo}</small>
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('modal-alertas').classList.add('aberto');
+}
+
+// Fecha o modal de alertas
+function fecharModalAlertas() {
+    document.getElementById('modal-alertas').classList.remove('aberto');
+}
+
+// Fecha clicando no fundo escuro
+document.getElementById('modal-alertas').addEventListener('click', function(e) {
+    if (e.target === this) fecharModalAlertas();
+});

@@ -1,0 +1,501 @@
+/* ==================================================================
+   REFRICONTROL — clientes.css
+   Cole no final do seu style.css
+   ================================================================== */
+
+
+/* ------------------------------------------------------------------
+   HEADER DA PÁGINA DE CLIENTES
+   ------------------------------------------------------------------ */
+.cli-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.cli-page-header .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.cli-page-header h1 {
+    font-size: 1.6rem;
+    color: #1a3a5a;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+/* ------------------------------------------------------------------
+   BARRA DE BUSCA COM SUGESTÕES (autocomplete)
+   ------------------------------------------------------------------ */
+.cli-search-wrapper {
+    position: relative;
+    max-width: 480px;
+}
+
+.cli-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.cli-search-input {
+    width: 100%;
+    padding: 12px 16px 12px 40px; /* espaço para o ícone da esquerda */
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    background: #ffffff;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.cli-search-input:focus {
+    border-color: #f39200;
+    box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.12);
+}
+
+/* Dropdown de sugestões */
+.cli-sugestoes {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.cli-sugestao-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cli-sugestao-item:last-child {
+    border-bottom: none;
+}
+
+.cli-sugestao-item:hover {
+    background: #f9fafb;
+}
+
+.cli-sugestao-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eef2f6;
+    color: #1a3a5a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cli-sugestao-nome {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1f2937;
+}
+
+.cli-sugestao-meta {
+    font-size: 0.78rem;
+    color: #6b7280;
+}
+
+
+/* ------------------------------------------------------------------
+   ESTADO INICIAL (nenhum cliente selecionado)
+   ------------------------------------------------------------------ */
+.cli-estado-inicial {
+    text-align: center;
+    padding: 80px 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.cli-empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+}
+
+.cli-empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a3a5a;
+    margin-bottom: 8px;
+}
+
+.cli-empty-sub {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+
+/* ------------------------------------------------------------------
+   PERFIL DO CLIENTE
+   ------------------------------------------------------------------ */
+.cli-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: modalShow 0.3s ease; /* reutiliza a animação existente */
+}
+
+/* Cabeçalho do perfil: avatar + nome + ações */
+.cli-perfil-header {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Círculo com iniciais do cliente */
+.cli-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #1a3a5a;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cli-perfil-info {
+    flex: 1;
+}
+
+.cli-perfil-info h2 {
+    font-size: 1.3rem;
+    color: #1a3a5a;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+
+/* Linha de metadados (telefone, endereço, código...) */
+.cli-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.cli-perfil-acoes {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* Badges de status */
+.cli-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+.cli-badge-ativo {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.cli-badge-inativo {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+
+/* ------------------------------------------------------------------
+   CARDS DE RESUMO FINANCEIRO DO CLIENTE
+   ------------------------------------------------------------------ */
+.cli-resumo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.cli-resumo-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cli-resumo-card .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.cli-resumo-card .value-main {
+    font-size: 1.5rem; /* um pouco menor que os cards do painel */
+    margin-top: 6px;
+}
+
+
+/* ------------------------------------------------------------------
+   ABAS INTERNAS (Compras / Pendências)
+   ------------------------------------------------------------------ */
+.cli-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0;
+}
+
+.cli-tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; /* alinha com o border-bottom do container */
+    border-radius: 0;
+    transition: all 0.2s;
+}
+
+.cli-tab-btn:hover {
+    color: #1a3a5a;
+}
+
+.cli-tab-btn.active {
+    color: #f39200;
+    border-bottom-color: #f39200;
+}
+
+.cli-aba {
+    animation: modalShow 0.2s ease;
+}
+
+
+/* ------------------------------------------------------------------
+   HEADER DAS ABAS (título + botão de ação)
+   ------------------------------------------------------------------ */
+.cli-aba-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    margin-top: 4px;
+}
+
+.cli-aba-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a3a5a;
+    margin: 0;
+}
+
+
+/* ------------------------------------------------------------------
+   FILTRO DE FORMA DE PAGAMENTO
+   ------------------------------------------------------------------ */
+.cli-filtro-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.cli-filtro-btn {
+    font-size: 0.8rem;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.cli-filtro-btn:hover {
+    border-color: #f39200;
+    color: #f39200;
+}
+
+.cli-filtro-btn.active {
+    background: #f39200;
+    color: #ffffff;
+    border-color: #f39200;
+}
+
+
+/* ------------------------------------------------------------------
+   TOGGLE DE JUROS NA ABA PENDÊNCIAS
+   ------------------------------------------------------------------ */
+.cli-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cli-toggle-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #f39200;
+    cursor: pointer;
+}
+
+/* Campo de taxa de juros ao lado do toggle */
+.cli-toggle-label input[type="number"] {
+    width: 64px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #e5e7eb;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.cli-toggle-label input[type="number"]:focus {
+    border-color: #f39200;
+}
+
+
+/* ------------------------------------------------------------------
+   BADGE DE DIAS EM ATRASO NA TABELA DE PENDÊNCIAS
+   ------------------------------------------------------------------ */
+.badge-atraso {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.badge-atraso.em-dia {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-atraso.atrasado {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-atraso.vence-hoje {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+/* Botão "Dar baixa" na coluna de ação das pendências */
+.btn-baixa {
+    background: #f39200;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-baixa:hover {
+    background: #d88200;
+}
+
+
+/* ------------------------------------------------------------------
+   ÁREA DE IMPRESSÃO DO RECIBO
+   Só aparece ao chamar window.print()
+   ------------------------------------------------------------------ */
+@media print {
+    /* Esconde tudo exceto o recibo */
+    body > * {
+        display: none !important;
+    }
+
+    #areaRecibo {
+        display: block !important;
+    }
+
+    .recibo-print {
+        font-family: 'Segoe UI', sans-serif;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .recibo-print h2 {
+        text-align: center;
+        color: #1a3a5a;
+        margin-bottom: 4px;
+    }
+
+    .recibo-print .recibo-sub {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    .recibo-print table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+    }
+
+    .recibo-print td, .recibo-print th {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.85rem;
+    }
+
+    .recibo-print .recibo-total {
+        text-align: right;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #1a3a5a;
+        margin-top: 8px;
+    }
+
+    .recibo-print .recibo-rodape {
+        text-align: center;
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 24px;
+        border-top: 1px dashed #e5e7eb;
+        padding-top: 12px;
+    }
+}

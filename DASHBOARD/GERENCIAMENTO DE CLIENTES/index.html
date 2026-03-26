@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Gerenciamento de Clientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="clientes" class="tab-content">
+
+    <!-- Header da seção -->
+    <div class="cli-page-header">
+        <div class="header-left">
+            <h1>Gerenciamento de Clientes</h1>
+            <!-- Barra de busca principal — busca por nome, CPF ou código -->
+            <div class="cli-search-wrapper">
+                <span class="cli-search-icon">🔍</span>
+                <input
+                    type="text"
+                    id="cliBusca"
+                    class="cli-search-input"
+                    placeholder="Buscar por nome, CPF ou código do cliente..."
+                    autocomplete="off"
+                />
+                <!-- Dropdown de sugestões em tempo real -->
+                <div id="cliSugestoes" class="cli-sugestoes" style="display:none;"></div>
+            </div>
+        </div>
+        <button id="cliBtnNovo" class="btn-primary">+ Novo Cliente</button>
+    </div>
+
+    <!-- ── PAINEL VAZIO (quando nenhum cliente está selecionado) ── -->
+    <div id="cliEstadoInicial" class="cli-estado-inicial">
+        <div class="cli-empty-icon">👥</div>
+        <p class="cli-empty-title">Busque um cliente para começar</p>
+        <p class="cli-empty-sub">Digite o nome, CPF ou código na barra acima para carregar o perfil.</p>
+    </div>
+
+    <!-- ── PERFIL COMPLETO DO CLIENTE (carregado após busca) ── -->
+    <div id="cliPerfil" class="cli-perfil" style="display:none;">
+
+        <!-- Cabeçalho do perfil -->
+        <div class="cli-perfil-header">
+            <div class="cli-avatar" id="cliAvatar">MM</div>
+            <div class="cli-perfil-info">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <h2 id="cliNomeExibido">—</h2>
+                    <span id="cliStatusBadge" class="cli-badge cli-badge-ativo">Ativo</span>
+                </div>
+                <div class="cli-meta-row">
+                    <span>📱 <span id="cliTelExibido">—</span></span>
+                    <span>📍 <span id="cliEndExibido">—</span></span>
+                    <span>🔖 Cód: <strong id="cliCodExibido">—</strong></span>
+                    <span>🪪 CPF: <span id="cliCpfExibido">—</span></span>
+                </div>
+            </div>
+            <div class="cli-perfil-acoes">
+                <button class="btn-filter" onclick="cliEditarCliente()">✏️ Editar</button>
+                <button class="btn-filter" onclick="cliImprimirRecibo()">🖨️ Recibo</button>
+            </div>
+        </div>
+
+        <!-- Cards de resumo financeiro do cliente -->
+        <div class="cli-resumo-grid">
+            <div class="cli-resumo-card">
+                <span class="label">Total Gasto</span>
+                <div class="value-main" id="cliTotalGasto">R$ 0,00</div>
+            </div>
+            <div class="cli-resumo-card">
+                <span class="label">Em Aberto</span>
+                <div class="value-main" style="color:#b91c1c;" id="cliTotalAberto">R$ 0,00</div>
+            </div>
+            <div class="cli-resumo-card">
+                <span class="label">Compras no Prazo</span>
+                <div class="value-main" id="cliQtdPrazo">0</div>
+            </div>
+            <div class="cli-resumo-card">
+                <span class="label">Última Compra</span>
+                <div class="value-main" style="font-size:1.2rem;" id="cliUltimaCompra">—</div>
+            </div>
+        </div>
+
+        <!-- Abas internas: Compras / Pendências -->
+        <div class="cli-tabs">
+            <button class="cli-tab-btn active" onclick="cliMostrarAba(this,'compras')">📋 Compras</button>
+            <button class="cli-tab-btn" onclick="cliMostrarAba(this,'pendencias')">⏳ Pendências</button>
+        </div>
+
+        <!-- ABA: COMPRAS -->
+        <div id="cli-aba-compras" class="cli-aba active">
+            <div class="cli-aba-header">
+                <h3>Histórico de Compras</h3>
+                <button class="btn-primary" style="font-size:0.85rem; padding:8px 16px;" onclick="cliAbrirNovaCompra()">+ Registrar Compra</button>
+            </div>
+
+            <!-- Filtro de forma de pagamento -->
+            <div class="cli-filtro-row">
+                <span style="font-size:0.85rem; color:#6b7280; font-weight:600;">Filtrar:</span>
+                <button class="cli-filtro-btn active" onclick="cliFiltrarCompras(this,'todos')">Todos</button>
+                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Dinheiro')">💵 Dinheiro</button>
+                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Pix')">📱 Pix</button>
+                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Cartão')">💳 Cartão</button>
+                <button class="cli-filtro-btn" onclick="cliFiltrarCompras(this,'Prazo')">📅 Prazo</button>
+            </div>
+
+            <div class="inventory-section" style="margin-top:12px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Vencimento</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cliListaCompras"></tbody>
+                </table>
+                <div id="cliComprasVazio" class="empty-state" style="display:none;">
+                    <div class="empty-icon">🛒</div>
+                    <p class="empty-title">Nenhuma compra registrada</p>
+                    <p class="empty-sub">Clique em "+ Registrar Compra" para adicionar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA: PENDÊNCIAS -->
+        <div id="cli-aba-pendencias" class="cli-aba" style="display:none;">
+            <div class="cli-aba-header">
+                <h3>Contas Pendentes</h3>
+                <!-- Toggle juros -->
+                <label class="cli-toggle-label">
+                    <input type="checkbox" id="cliToggleJuros" onchange="cliAtualizarPendencias()">
+                    <span>Aplicar juros (% a.m.)</span>
+                    <input type="number" id="cliTaxaJuros" value="2" min="0" max="100" step="0.1"
+                        style="width:60px; padding:4px 8px; border-radius:8px; border:1px solid #e5e7eb; font-size:0.85rem;">
+                </label>
+            </div>
+
+            <div class="inventory-section" style="margin-top:12px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor Original</th>
+                            <th>Vencimento</th>
+                            <th>Dias em Atraso</th>
+                            <th>Valor com Juros</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cliListaPendencias"></tbody>
+                </table>
+                <div id="cliPendenciasVazio" class="empty-state" style="display:none;">
+                    <div class="empty-icon">✅</div>
+                    <p class="empty-title">Nenhuma pendência!</p>
+                    <p class="empty-sub">Este cliente está em dia com todos os pagamentos.</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- fim cli-perfil -->
+
+</section>
+
+
+<!-- ========================================================
+     MODAL: CADASTRAR / EDITAR CLIENTE
+     Cole antes do fechamento do </div> do .container
+     ======================================================== -->
+<div id="modalCliente" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width:600px;">
+        <h2 id="modalClienteTitulo">Cadastrar Cliente</h2>
+
+        <div class="input-row">
+            <div>
+                <label>Nome completo</label>
+                <input type="text" id="cliNome" placeholder="Ex: João da Silva">
+            </div>
+            <div>
+                <label>Código do cliente</label>
+                <input type="text" id="cliCod" placeholder="Ex: CLI-001">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div>
+                <label>CPF</label>
+                <input type="text" id="cliCpf" placeholder="000.000.000-00" maxlength="14">
+            </div>
+            <div>
+                <label>Telefone</label>
+                <input type="text" id="cliTel" placeholder="(27) 99999-0000">
+            </div>
+        </div>
+
+        <div>
+            <label>Endereço</label>
+            <input type="text" id="cliEnd" placeholder="Rua, número, bairro, cidade">
+        </div>
+
+        <div class="input-row" style="margin-top:4px;">
+            <div>
+                <label>Status</label>
+                <select id="cliStatus" style="width:100%; padding:14px 16px; border:1.5px solid #e5e7eb; border-radius:12px; font-size:1rem; background:#f9fafb; color:#1f2937; outline:none;">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+            </div>
+            <div>
+                <label>Limite a prazo (R$)</label>
+                <input type="number" id="cliLimite" placeholder="Ex: 500">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button id="cliSalvarBtn" class="btn-save" onclick="cliSalvarCliente()">Salvar Cliente</button>
+            <button class="btn-cancel" onclick="cliFecharModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ========================================================
+     MODAL: REGISTRAR NOVA COMPRA
+     ======================================================== -->
+<div id="modalCompra" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width:520px;">
+        <h2>Registrar Compra</h2>
+
+        <div>
+            <label>Descrição do serviço / produto</label>
+            <input type="text" id="compraDesc" placeholder="Ex: Recarga gás R134a + mão de obra">
+        </div>
+
+        <div class="input-row">
+            <div>
+                <label>Valor (R$)</label>
+                <input type="number" id="compraValor" placeholder="0,00">
+            </div>
+            <div>
+                <label>Data</label>
+                <input type="date" id="compraData">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div>
+                <label>Forma de pagamento</label>
+                <select id="compraPagamento" style="width:100%; padding:14px 16px; border:1.5px solid #e5e7eb; border-radius:12px; font-size:1rem; background:#f9fafb; color:#1f2937; outline:none;" onchange="cliToggleVencimento()">
+                    <option value="Dinheiro">💵 Dinheiro</option>
+                    <option value="Pix">📱 Pix</option>
+                    <option value="Cartão">💳 Cartão</option>
+                    <option value="Prazo">📅 Prazo</option>
+                </select>
+            </div>
+            <!-- Vencimento aparece só quando for "Prazo" -->
+            <div id="wrapperVencimento" style="display:none;">
+                <label>Data de vencimento</label>
+                <input type="date" id="compraVencimento">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-save" onclick="cliSalvarCompra()">Salvar Compra</button>
+            <button class="btn-cancel" onclick="cliFecharModalCompra()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ========================================================
+     ÁREA DE IMPRESSÃO DO RECIBO (invisível na tela)
+     ======================================================== -->
+<div id="areaRecibo" style="display:none;">
+    <div id="conteudoRecibo"></div>
+</div>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

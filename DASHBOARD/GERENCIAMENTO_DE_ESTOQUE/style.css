@@ -1,12 +1,16 @@
-/* ================================================================== 
-   CONFIGURAÇÕES GERAIS (USANDO SUAS CORES DA TELA DE LOGIN)
+/* ==================================================================
+   REFRICONTROL — style.css
+   Versão com todas as melhorias aplicadas
+   ================================================================== */
+
+
+/* ==================================================================
+   1. CONFIGURAÇÕES GERAIS
    ================================================================== */
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     background-color: #f3f4f6;
-    /* --bg-body */
     color: #1f2937;
-    /* --text-main */
     margin: 0;
 }
 
@@ -15,18 +19,20 @@ body {
     min-height: 100vh;
 }
 
-/* ================================================================== 
-   SIDEBAR (AZUL ESCURO PROFISSIONAL)
+
+/* ==================================================================
+   2. SIDEBAR
    ================================================================== */
 .sidebar {
     width: 250px;
     background-color: #496b8e;
-    /* --primary */
     color: #ffffff;
     padding: 30px 20px;
     position: sticky;
     top: 0;
     height: 100vh;
+    /* Esconde a sidebar em telas pequenas por padrão (responsividade) */
+    transition: transform 0.3s ease;
 }
 
 .logo-container {
@@ -57,90 +63,113 @@ body {
     margin-bottom: 8px;
     transition: all 0.3s ease;
     color: #eef2f6;
-    /* --primary-light */
     font-weight: 500;
 }
 
 .nav-item:hover {
     background: rgba(243, 146, 0, 0.2);
-    /* --accent com transparência */
     color: #ffffff;
 }
 
 .nav-item.active {
     background-color: #f39200;
-    /* --accent (Laranja destaque) */
     color: #ffffff;
     box-shadow: 0 4px 15px rgba(243, 146, 0, 0.3);
 }
 
-/* ================================================================== 
-   CONTEÚDO PRINCIPAL
+
+/* ==================================================================
+   3. CONTEÚDO PRINCIPAL
    ================================================================== */
 .content {
     flex: 1;
-    padding: 40px 50px; /* Aumentei o respiro lateral da tela */
+    padding: 40px 50px;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Espaço entre o título e os cards */
+    gap: 30px;
 }
 
-/* Título do Painel - Espaçamento inferior */
-.panel-header {
-    margin-bottom: 10px;
+/* Header da seção Gerenciar Estoque */
+#estoque header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
-.panel-header h1 {
-    font-size: 1.6rem;
-    color: #1a3a5a;
-    /* --primary */
-    font-weight: 700;
-    margin-bottom: 15px; /* Espaço entre "Painel de Controle" e o botão "Filtrar" */
+/* Título fica fixo à esquerda */
+#estoque header h1 {
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Input estica e ocupa o espaço do meio */
+#estoque header .search-input {
+    flex: 1;
+    max-width: none; /* remove o max-width de 420px que estava no CSS */
+    margin-top: 60px;
+}
+
+/* Botão empurrado para a direita pelo margin-left auto */
+#estoque header .btn-primary {
+    margin-top: 100px;
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 .btn-filter {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    /* --border-color */
     padding: 10px 24px;
     margin-top: 10px;
+    margin-bottom: 20px;
     border-radius: 20px;
     color: #6b7280;
-    /* --text-muted */
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* ================================================================== 
-   CARDS DO PAINEL (GRID ESTILO REFERÊNCIA)
+.btn-filter:hover {
+    background: #f3f4f6;
+}
+
+
+/* ==================================================================
+   4. GRID DO PAINEL (cards + gráfico)
    ================================================================== */
 .panel-grid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-template-columns: 320px 1fr;
-    gap: 40px; /* Aumentei de 25px para 40px */
+    gap: 25px;
     align-items: start;
 }
 
-/* Cards de Valor (Esquerda) - Mais espaço entre um card e outro */
+/* Cards ficam em linha horizontal no topo */
 .value-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 25px; /* Espaço entre os cards brancos da esquerda */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
 }
 
 .card-simple {
     background-color: #ffffff;
-    /* --bg-card */
     padding: 30px;
-    margin-top: 20px;
+    margin-top: 0px;
     border-radius: 16px;
     border: 1px solid #e5e7eb;
-    /* Aplicando sua sombra da login */
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* NOVO: Card de alerta com borda vermelha para chamar atenção */
+.card-alerta {
+    border-left: 5px solid #b91c1c;
 }
 
 .card-simple .label {
     color: #6b7280;
-    /* --text-muted */
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -150,7 +179,6 @@ body {
     font-size: 2.2rem;
     font-weight: 700;
     color: #1a3a5a;
-    /* --primary */
     margin-top: 10px;
 }
 
@@ -161,37 +189,99 @@ body {
     margin-top: 10px;
 }
 
-/* Card do Gráfico (Direita) - Mais respiro interno */
+/* Card do gráfico */
 .chart-card {
+    width: 97%;
     background-color: #ffffff;
-    padding: 40px; /* Bastante espaço interno para o gráfico não sufocar */
-    border-radius: 16px;
-    min-height: 450px; /* Garante que o card tenha um tamanho bom */
+    min-height: 450px; /* reduz a altura mínima que estava em 450px */
+    padding: 28px;
+    border-radius: 10px;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid #e5e7eb;
 }
 
-.donut-chart-placeholder {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    /* Mistura das suas cores no gráfico */
-    border: 35px solid #1a3a5a;
-    border-top-color: #f39200;
-    border-right-color: #6b7280;
+/* NOVO: wrapper para o canvas do Chart.js ter tamanho controlado */
+.donut-wrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.chart-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Legenda do gráfico (gerada pelo JS) */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #374151;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
 }
 
 .view-more {
     color: #f39200;
-    /* --accent */
     text-decoration: none;
     font-weight: 600;
 }
 
-/* ================================================================== 
-   TABELA DE ESTOQUE
+
+/* ==================================================================
+   5. BARRA DE BUSCA (NOVA)
+   Aparece acima da tabela de estoque
+   ================================================================== */
+.search-bar-wrapper {
+    margin-bottom: 16px;
+}
+
+.search-input {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 18px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    background-color: #ffffff;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.search-input:focus {
+    border-color: #f39200;
+    box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.12);
+}
+
+
+/* ==================================================================
+   6. TABELA DE ESTOQUE
    ================================================================== */
 .inventory-section {
     margin-top: 20px;
@@ -209,11 +299,8 @@ table {
 
 th {
     background-color: #eef2f6;
-    /* --primary-light */
     color: #1a3a5a;
-    /* --primary */
     padding: 20px 25px;
-
     text-align: left;
     font-weight: 600;
 }
@@ -221,9 +308,27 @@ th {
 td {
     padding: 20px 25px;
     border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
 }
 
-/* Status com as cores de alerta */
+/* NOVO: Destaque vermelho suave para linhas com estoque abaixo do mínimo */
+tr.linha-alerta td {
+    background-color: #fff5f5;
+}
+
+tr.linha-alerta:hover td {
+    background-color: #fee2e2;
+}
+
+/* Status badges */
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
 .status.in-stock {
     background: #dcfce7;
     color: #15803d;
@@ -239,46 +344,86 @@ td {
     color: #6b7280;
 }
 
-/* ================================================================== 
-   MODAL (POP-UP) - ESTRUTURA FIXA
-   ================================================================== */
+/* NOVO: Botões de ação (editar e excluir) dentro da tabela */
+.btn-acao {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
 
-/* 1. O fundo escuro (Overlay) */
+.btn-acao.editar:hover {
+    background: #eff6ff;
+}
+
+.btn-acao.excluir:hover {
+    background: #fee2e2;
+}
+
+
+/* ==================================================================
+   7. ESTADO VAZIO DA TABELA (NOVO)
+   Aparece quando não há produtos cadastrados
+   ================================================================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+}
+
+.empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a3a5a;
+    margin-bottom: 8px;
+}
+
+.empty-sub {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+
+/* ==================================================================
+   8. MODAL (POP-UP DE CADASTRO / EDIÇÃO)
+   ================================================================== */
 .modal {
-    display: none; /* Mantido como none, o JS muda para flex */
+    display: none;
     position: fixed;
-    inset: 0; /* Atalho para top, bottom, left, right: 0 */
+    inset: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo um pouco mais escuro para destaque */
-    backdrop-filter: blur(5px); /* Desfoque no fundo */
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
     z-index: 9999;
     align-items: center;
     justify-content: center;
     padding: 20px;
 }
 
-/* 2. A caixa branca centralizada */
 .modal-content {
     background-color: #ffffff;
     width: 100%;
-    max-width: 500px; /* Largura máxima confortável */
+    max-width: 500px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     position: relative;
-    animation: modalShow 0.3s ease-out; /* Animação de entrada */
+    animation: modalShow 0.3s ease-out;
 }
 
-/* Animação para o modal não aparecer "seco" */
 @keyframes modalShow {
     from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
 }
-
-/* ================================================================== 
-   ESTILIZAÇÃO DOS INPUTS (PREMIUM)
-   ================================================================== */
 
 .modal-content h2 {
     font-size: 1.6rem;
@@ -305,11 +450,10 @@ td {
     background-color: #f9fafb;
     transition: all 0.2s ease;
     outline: none;
-    margin-bottom: 20px; /* Espaçamento entre campos */
+    margin-bottom: 20px;
     box-sizing: border-box;
 }
 
-/* Efeito de foco inspirado na sua tela de login */
 .modal-content input:focus {
     border-color: #f39200;
     background-color: #ffffff;
@@ -320,7 +464,6 @@ td {
     color: #9ca3af;
 }
 
-/* Organizador de Grupos (Lado a Lado) */
 .input-row {
     display: flex;
     gap: 15px;
@@ -330,10 +473,10 @@ td {
     flex: 1;
 }
 
-/* ================================================================== 
-   BOTÕES DE AÇÃO
-   ================================================================== */
 
+/* ==================================================================
+   9. BOTÕES GERAIS
+   ================================================================== */
 .modal-actions {
     display: flex;
     gap: 15px;
@@ -341,43 +484,35 @@ td {
 }
 
 .btn-primary {
-    background-color: #f39200; /* Laranja da sua marca */
+    background-color: #f39200;
+    margin-left: 90%;
     color: #ffffff;
     border: none;
     padding: 12px 24px;
-    border-radius: 12px; /* Cantos arredondados iguais aos cards */
+    border-radius: 12px;
     font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px; /* Espaço entre o "+" e o texto */
+    gap: 10px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 14px rgba(243, 146, 0, 0.3); /* Sombra colorida suave */
+    box-shadow: 0 4px 14px rgba(243, 146, 0, 0.3);
 }
 
-/* Efeito ao passar o mouse */
 .btn-primary:hover {
-    background-color: #d88200; /* Laranja um pouco mais escuro */
-    transform: translateY(-2px); /* Eleva o botão levemente */
+    background-color: #d88200;
+    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(243, 146, 0, 0.4);
 }
 
-/* Efeito ao clicar */
 .btn-primary:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(243, 146, 0, 0.2);
 }
 
-/* Estilo do sinal de "+" para destaque */
-.btn-primary::before {
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
-
 .btn-save {
-    flex: 2; /* Botão de salvar fica maior */
+    flex: 2;
     background-color: #f39200;
     color: white;
     border: none;
@@ -411,9 +546,50 @@ td {
     background-color: #e2e8f0;
 }
 
-/* SEÇÃO DOS RELATÓRIOS */
 
-/* Grid de 3 colunas para os relatórios */
+/* ==================================================================
+   10. TOAST DE NOTIFICAÇÃO (NOVO)
+   Aparece no canto inferior direito com feedback de ações
+   ================================================================== */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    z-index: 99999;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    /* Animação de entrada e saída */
+    animation: toastIn 0.3s ease;
+}
+
+/* Toast verde: ação de sucesso (salvar, etc.) */
+.toast.sucesso {
+    background-color: #15803d;
+}
+
+/* Toast vermelho: ação de exclusão ou erro */
+.toast.erro {
+    background-color: #b91c1c;
+}
+
+/* Toast amarelo: aviso */
+.toast.aviso {
+    background-color: #d97706;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ==================================================================
+   11. SEÇÃO DE RELATÓRIOS
+   ================================================================== */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -421,25 +597,16 @@ td {
     margin-bottom: 20px;
 }
 
-/* Ajuste para o texto de porcentagem nos relatórios */
-.status.in-stock {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-}
-
-/* Deixar a tabela de relatórios com linhas mais sutis */
 #lista-relatorio td {
     color: #4b5563;
     font-size: 0.95rem;
 }
 
 
-
-
-
-/* LOGICA DAS SEÇÕES PODEREM TROCAR FAVOR NAO MEXER */
-
-/* Lógica de Abas */
+/* ==================================================================
+   12. LÓGICA DE ABAS — NÃO MEXA AQUI
+   Controla qual seção fica visível
+   ================================================================== */
 .tab-content {
     display: none;
 }
@@ -448,4 +615,60 @@ td {
     display: block;
 }
 
-/* PLMDS N MECHE NESSE BAGULHO AI EM CIMA ^-^ */
+
+/* ==================================================================
+   13. RESPONSIVIDADE — TELAS PEQUENAS (NOVO)
+   Em telas abaixo de 768px a sidebar fica oculta e o layout empilha
+   ================================================================== */
+@media (max-width: 768px) {
+
+    /* Sidebar escondida: aparece com classe .aberta (adicionada pelo JS) */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.aberta {
+        transform: translateX(0);
+    }
+
+    /* Conteúdo ocupa a tela toda */
+    .content {
+        padding: 20px;
+    }
+
+    /* Grid do painel vira coluna única */
+    .panel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Cards de relatório empilhados */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tabela com scroll horizontal para não quebrar o layout */
+    .inventory-section {
+        overflow-x: auto;
+    }
+
+    /* Botão hambúrguer fica visível em mobile */
+    .btn-hamburger {
+        display: flex;
+    }
+}
+
+/* Botão hambúrguer: escondido no desktop, visível no mobile */
+.btn-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #1a3a5a;
+    padding: 4px;
+}

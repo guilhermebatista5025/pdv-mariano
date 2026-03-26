@@ -10,6 +10,10 @@
 
 <body>
     <div class="container">
+
+        <!-- ========================================================
+             SIDEBAR DE NAVEGAÇÃO
+             ======================================================== -->
         <aside class="sidebar">
             <div class="logo-container">
                 <img src="../../IMAGENS/ChatGPT Image 11 de fev. de 2026, 11_13_22.png" alt="Refrigeração Mariano"
@@ -25,6 +29,10 @@
         </aside>
 
         <main class="content">
+
+            <!-- ========================================================
+                 SEÇÃO: PAINEL DE CONTROLE
+                 ======================================================== -->
             <section id="painel" class="tab-content active">
                 <div class="panel-header">
                     <h1>Painel de Controle</h1>
@@ -34,6 +42,7 @@
                 </div>
 
                 <div class="panel-grid">
+                    <!-- Cards de valor financeiro (esquerda) -->
                     <div class="value-cards">
                         <div class="card-simple">
                             <span class="label">Ganho Líquido Previsto</span>
@@ -47,18 +56,27 @@
                             <span class="label">Faturamento Bruto</span>
                             <div id="total-venda-painel" class="value-sub">R$ 0,00</div>
                         </div>
+
+                        <!-- NOVO: Badge de alertas de estoque baixo -->
+                        <div class="card-simple card-alerta" id="card-alerta-wrapper" style="display:none;">
+                            <span class="label">⚠️ Produtos em Alerta</span>
+                            <div id="alerta-qtd" class="value-main" style="color:#b91c1c;">0</div>
+                            <span style="font-size:0.8rem; color:#6b7280;">produtos abaixo do mínimo</span>
+                        </div>
                     </div>
 
+                    <!-- Card do gráfico de categorias (direita) -->
                     <div class="chart-card">
                         <div class="chart-header">
                             <h3>Categorias</h3>
                         </div>
                         <div class="chart-content">
-                            <div class="donut-chart-placeholder">
-                                <div class="donut"></div>
+                            <!-- NOVO: Canvas real do Chart.js no lugar do círculo CSS -->
+                            <div class="donut-wrapper">
+                                <canvas id="grafico-categorias"></canvas>
                             </div>
-                            <div class="chart-legend" id="legenda-categorias">
-                            </div>
+                            <!-- Legenda gerada dinamicamente pelo JS -->
+                            <div class="chart-legend" id="legenda-categorias"></div>
                         </div>
                         <a href="#" class="view-more"
                             onclick="document.querySelector('[data-target=\'relatorios\']').click()">Ver mais</a>
@@ -67,14 +85,20 @@
             </section>
 
 
-
-            <!----------------- INICIO DA SEÇÃO DE ESTOQUE ------------------>
-
+            <!-- ========================================================
+                 SEÇÃO: GERENCIAR ESTOQUE
+                 ======================================================== -->
             <section id="estoque" class="tab-content">
+
                 <header>
-                    <h1>Gerenciar Estoque</h1>
+                    <div class="header-left">
+                        <h1>Gerenciar Estoque</h1>
+                        <input type="text" id="campoBusca" class="search-input"
+                            placeholder="🔍  Buscar por nome ou categoria..." />
+                    </div>
                     <button id="btnAbrirModal" class="btn-primary">+ Novo Produto</button>
                 </header>
+
                 <div class="inventory-section">
                     <table>
                         <thead>
@@ -84,17 +108,29 @@
                                 <th>Qtd</th>
                                 <th>Status</th>
                                 <th>Preço Venda</th>
+                                <!-- NOVO: Coluna de ações (editar / excluir) -->
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody id="lista-produtos"></tbody>
                     </table>
+
+                    <!-- NOVO: Estado vazio — aparece quando não há produtos -->
+                    <div id="estado-vazio" class="empty-state" style="display:none;">
+                        <div class="empty-icon">📦</div>
+                        <p class="empty-title">Nenhum produto cadastrado ainda</p>
+                        <p class="empty-sub">Comece adicionando seu primeiro produto ao estoque.</p>
+                        <button class="btn-primary" onclick="document.getElementById('btnAbrirModal').click()">
+                            + Adicionar Produto
+                        </button>
+                    </div>
                 </div>
             </section>
-            <!-- FINAL AQUI -->
 
 
-            <!--------------------- INICIO DA SEÇÃO RELATORIOS AQUI  --------------------------->
-
+            <!-- ========================================================
+                 SEÇÃO: RELATÓRIOS
+                 ======================================================== -->
             <div id="relatorios" class="tab-content">
                 <div class="panel-header">
                     <h1>Relatórios de Desempenho</h1>
@@ -134,16 +170,20 @@
                                 <th>Lucro Previsto</th>
                             </tr>
                         </thead>
-                        <tbody id="lista-relatorio">
-                        </tbody>
+                        <tbody id="lista-relatorio"></tbody>
                     </table>
                 </div>
             </div>
         </main>
 
+
+        <!-- ========================================================
+             MODAL: CADASTRAR / EDITAR PRODUTO
+             ======================================================== -->
         <div id="modal" class="modal" style="display: none;">
             <div class="modal-content">
-                <h2>Cadastrar Produto</h2>
+                <!-- O título muda dinamicamente entre "Cadastrar" e "Editar" -->
+                <h2 id="modal-titulo">Cadastrar Produto</h2>
 
                 <div class="input-row">
                     <div>
@@ -167,9 +207,16 @@
                     </div>
                 </div>
 
-                <div>
-                    <label>Quantidade em Estoque</label>
-                    <input type="number" id="estoque" placeholder="Ex: 10">
+                <div class="input-row">
+                    <div>
+                        <label>Quantidade em Estoque</label>
+                        <input type="number" id="estoque-input" placeholder="Ex: 10">
+                    </div>
+                    <!-- NOVO: Campo de estoque mínimo para alertas -->
+                    <div>
+                        <label>Estoque Mínimo (alerta)</label>
+                        <input type="number" id="minimo" placeholder="Ex: 5">
+                    </div>
                 </div>
 
                 <div class="modal-actions">
@@ -180,12 +227,21 @@
         </div>
 
 
+        <!-- ========================================================
+             TOAST DE NOTIFICAÇÃO (feedback visual)
+             Criado pelo JS — não precisa mexer aqui
+             ======================================================== -->
+        <div id="toast" class="toast" style="display:none;"></div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    </div><!-- fim .container -->
 
-        <script src="script.js"></script>
+
+    <!-- Bibliotecas externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
